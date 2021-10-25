@@ -1,0 +1,76 @@
+---
+kind: pipeline
+type: docker
+name: terraform-provider-couchbase
+
+clone:
+  depth: 1
+
+steps:
+  - name: linter
+    image: golang
+    commands:
+      - apt-get update && apt-get install -yy python3 python3-pip shellcheck
+      - pip3 install yamllint
+      - go get -u golang.org/x/lint/golint
+      - find . -name "*.sh" | xargs shellcheck -s sh
+      - yamllint .
+      - golint ./...
+  - name: run tests
+    image: golang
+    environment:
+      CB_ADDRESS: couchbase
+      CB_PORT: 8091
+      CB_USERNAME: Administrator
+      CB_PASSWORD: Administrator
+    commands:
+      - go clean -testcache
+      - go test -v ./...
+  - name: notify slack
+    image: plugins/slack
+    when:
+      status:
+        - success
+        - failure
+    settings:
+      webhook:
+        from_secret: slack_webhook
+      channel: drone
+      username: drone
+      link_names: true
+      template: >
+        {{#success build.status}}
+          *✓ Succeeded - project {{repo.name}}:*
+          - build {{build.number}}
+          - commit {{build.commit}}
+          - branch {{build.branch}}
+          - event {{build.event}}
+          - PR {{build.pull}}
+          - link {{build.link}}
+        {{else}}
+          *✖︎ Failed - project {{repo.name}}:*
+          - build {{build.number}}
+          - commit {{build.commit}}
+          - branch {{build.branch}}
+          - event {{build.event}}
+          - PR {{build.pull}}
+          - link {{build.link}}
+        {{/success}}
+
+volumes:
+  - name: docker_sock
+    host:
+      path: /var/run/docker.sock
+
+trigger:
+  branch:
+    - dev
+    - main
+  event:
+    - push
+    - pull_request
+    - tag
+
+services:
+  - name: couchbase
+    image: couchbase
