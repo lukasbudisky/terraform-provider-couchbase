@@ -71,6 +71,7 @@ func createQueryIndex(c context.Context, d *schema.ResourceData, m interface{}) 
 	if diags != nil {
 		return diags
 	}
+	defer couchbase.ConnectionCLose()
 
 	indexName := d.Get(keyQueryIndexName).(string)
 	bucketName := d.Get(keyQueryIndexBucket).(string)
@@ -115,6 +116,7 @@ func readQueryIndex(c context.Context, d *schema.ResourceData, m interface{}) di
 	if diags != nil {
 		return diags
 	}
+	defer couchbase.ConnectionCLose()
 
 	idx, err := couchbase.readQueryIndexById(d.Id())
 	if err != nil && errors.Is(err, gocb.ErrIndexNotFound) {
@@ -152,6 +154,7 @@ func deleteQueryIndex(c context.Context, d *schema.ResourceData, m interface{}) 
 	if diags != nil {
 		return diags
 	}
+	defer couchbase.ConnectionCLose()
 
 	indexName := d.Get(keyQueryIndexName).(string)
 	bucketName := d.Get(keyQueryIndexBucket).(string)

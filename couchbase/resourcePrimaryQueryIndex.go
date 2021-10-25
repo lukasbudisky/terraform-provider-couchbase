@@ -53,6 +53,7 @@ func createPrimaryQueryIndex(c context.Context, d *schema.ResourceData, m interf
 	if diags != nil {
 		return diags
 	}
+	defer couchbase.ConnectionCLose()
 
 	indexName := d.Get(keyPrimaryQueryIndexName).(string)
 	bucketName := d.Get(keyPrimaryQueryIndexBucket).(string)
@@ -92,6 +93,7 @@ func readPrimaryQueryIndex(c context.Context, d *schema.ResourceData, m interfac
 	if diags != nil {
 		return diags
 	}
+	defer couchbase.ConnectionCLose()
 
 	idx, err := couchbase.readQueryIndexById(d.Id())
 	if err != nil && errors.Is(err, gocb.ErrIndexNotFound) {
@@ -123,6 +125,7 @@ func deletePrimaryQueryIndex(c context.Context, d *schema.ResourceData, m interf
 	if diags != nil {
 		return diags
 	}
+	defer couchbase.ConnectionCLose()
 
 	indexName := d.Get(keyPrimaryQueryIndexName).(string)
 	bucketName := d.Get(keyPrimaryQueryIndexBucket).(string)

@@ -56,3 +56,8 @@ func (cc *CouchbaseConnection) ConnectionValidate() (*gocb.Cluster, diag.Diagnos
 	}
 	return cluster, diags
 }
+
+// ConnectionCLose close couchbase connection
+func (cc *CouchbaseConfiguration) ConnectionCLose() {
+	cc.Cluster.Close(nil)
+}

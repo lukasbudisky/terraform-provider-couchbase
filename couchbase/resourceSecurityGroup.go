@@ -75,6 +75,7 @@ func createSecurityGroup(c context.Context, d *schema.ResourceData, m interface{
 	if diags != nil {
 		return diags
 	}
+	defer couchbase.ConnectionCLose()
 
 	gs, err := groupSettings(
 		d.Get(keySecurityGroupName).(string),
@@ -103,6 +104,7 @@ func readSecurityGroup(c context.Context, d *schema.ResourceData, m interface{})
 	if diags != nil {
 		return diags
 	}
+	defer couchbase.ConnectionCLose()
 
 	group, err := couchbase.UserManager.GetGroup(groupID, nil)
 	if err != nil && errors.Is(err, gocb.ErrGroupNotFound) {
@@ -143,6 +145,7 @@ func updateSecurityGroup(c context.Context, d *schema.ResourceData, m interface{
 	if diags != nil {
 		return diags
 	}
+	defer couchbase.ConnectionCLose()
 
 	if d.HasChanges(
 		keySecurityGroupName,
@@ -177,6 +180,7 @@ func deleteSecurityGroup(c context.Context, d *schema.ResourceData, m interface{
 	if diags != nil {
 		return diags
 	}
+	defer couchbase.ConnectionCLose()
 
 	if err := couchbase.UserManager.DropGroup(groupID, nil); err != nil {
 		diag.FromErr(err)

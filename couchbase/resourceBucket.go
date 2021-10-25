@@ -178,6 +178,7 @@ func createBucket(c context.Context, d *schema.ResourceData, m interface{}) diag
 	if diags != nil {
 		return diags
 	}
+	defer couchbase.ConnectionCLose()
 
 	if err := couchbase.BucketManager.CreateBucket(*bs, nil); err != nil {
 		return diag.FromErr(err)
@@ -197,6 +198,7 @@ func readBucket(c context.Context, d *schema.ResourceData, m interface{}) diag.D
 	if diags != nil {
 		return diags
 	}
+	defer couchbase.ConnectionCLose()
 
 	bucket, err := couchbase.BucketManager.GetBucket(bucketID, nil)
 	if err != nil && errors.Is(err, gocb.ErrBucketNotFound) {
@@ -273,6 +275,7 @@ func updateBucket(c context.Context, d *schema.ResourceData, m interface{}) diag
 	if diags != nil {
 		return diags
 	}
+	defer couchbase.ConnectionCLose()
 
 	if d.HasChanges(
 		keyBucketName,
@@ -317,6 +320,7 @@ func deleteBucket(c context.Context, d *schema.ResourceData, m interface{}) diag
 	if diags != nil {
 		return diags
 	}
+	defer couchbase.ConnectionCLose()
 
 	if err := couchbase.BucketManager.DropBucket(bucketID, nil); err != nil {
 		diag.FromErr(err)
