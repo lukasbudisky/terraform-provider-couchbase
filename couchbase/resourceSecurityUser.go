@@ -94,6 +94,7 @@ func createSecurityUser(c context.Context, d *schema.ResourceData, m interface{}
 	if diags != nil {
 		return diags
 	}
+	defer couchbase.ConnectionCLose()
 
 	us, err := userSettings(
 		d.Get(keySecurityUserUsername).(string),
@@ -123,6 +124,7 @@ func readSecurityUser(c context.Context, d *schema.ResourceData, m interface{}) 
 	if diags != nil {
 		return diags
 	}
+	defer couchbase.ConnectionCLose()
 
 	user, err := couchbase.UserManager.GetUser(userID, nil)
 	if err != nil && errors.Is(err, gocb.ErrUserNotFound) {
@@ -165,6 +167,7 @@ func updateSecurityUser(c context.Context, d *schema.ResourceData, m interface{}
 	if diags != nil {
 		return diags
 	}
+	defer couchbase.ConnectionCLose()
 
 	if d.HasChanges(
 		keySecurityUserUsername,
@@ -201,6 +204,7 @@ func deleteSecurityUser(c context.Context, d *schema.ResourceData, m interface{}
 	if diags != nil {
 		return diags
 	}
+	defer couchbase.ConnectionCLose()
 
 	if err := couchbase.UserManager.DropUser(userID, nil); err != nil {
 		diag.FromErr(err)
