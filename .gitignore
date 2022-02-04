@@ -21,3 +21,5 @@ crash.log
 .terraform/
 *.tfstate
 *.tfstate.backup
+
+.idea

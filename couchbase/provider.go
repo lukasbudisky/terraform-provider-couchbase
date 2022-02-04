@@ -44,7 +44,7 @@ func Provider() *schema.Provider {
 		},
 
 		ResourcesMap: map[string]*schema.Resource{
-			"couchbase_bucket_manager":      resourceBucket(),
+			"couchbase_bucket":              resourceBucket(),
 			"couchbase_security_group":      resourceSecurityGroup(),
 			"couchbase_security_user":       resourceSecurityUser(),
 			"couchbase_primary_query_index": resourcePrimaryQueryIndex(),
@@ -67,7 +67,7 @@ func providerConfigure(ctx context.Context, d *schema.ResourceData) (interface{}
 			},
 			// TODO
 			SecurityConfig: gocb.SecurityConfig{
-				TLSSkipVerify: false,
+				TLSSkipVerify: true,
 				AllowedSaslMechanisms: []gocb.SaslMechanism{
 					gocb.PlainSaslMechanism,
 				},
