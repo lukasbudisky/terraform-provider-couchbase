@@ -6,18 +6,19 @@ terraform {
   required_version = ">= 0.13"
   required_providers {
     couchbase = {
-      version = "~> 0.0.1"
+      version = "~> 0.0.3"
       source  = "budisky.com/couchbase/couchbase"
     }
   }
 }
 
 provider "couchbase" {
-  address            = "couchbase.couchbase"
-  port               = 8091
-  username           = "Administrator"
-  password           = "Administrator"
-  management_timeout = 10
+  address                   = "127.0.0.1"
+  client_port               = 8091
+  node_port                 = 11210
+  username                  = "Administrator"
+  password                  = "123456"
+  management_timeout        = 10
 }
 
 ###########
@@ -30,12 +31,12 @@ resource "couchbase_bucket_manager" "bucket_1" {
   max_expire               = 0
   conflict_resolution_type = "seqno"
   compression_mode         = "passive"
-  num_replicas             = 1
+  num_replicas             = 0
 }
 
-# ###############
-# # User groups #
-# ###############
+###############
+# User groups #
+###############
 resource "couchbase_security_group" "user_group_1" {
   name        = "user_group_1"
   description = "user group"
@@ -53,9 +54,9 @@ resource "couchbase_security_group" "user_group_1" {
   }
 }
 
-# #########
-# # Users #
-# #########
+#########
+# Users #
+#########
 resource "random_password" "user_password" {
   length  = 10
   special = false
@@ -70,9 +71,9 @@ resource "couchbase_security_user" "user_1" {
   groups = [couchbase_security_group.user_group_1.id]
 }
 
-# # ###########
-# # # Indexes #
-# # ###########
+# ###########
+# # Indexes #
+# ###########
 resource "couchbase_primary_query_index" "primary_index_1" {
   name   = "primary_index_1"
   bucket = couchbase_bucket_manager.bucket_1.name

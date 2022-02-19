@@ -9,6 +9,10 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+// validateBucketType function validate bucket type
+// - membase
+// - memcached
+// - ephemeral
 func validateBucketType() schema.SchemaValidateDiagFunc {
 	return func(i interface{}, c cty.Path) diag.Diagnostics {
 		var diags diag.Diagnostics
@@ -38,6 +42,12 @@ func validateBucketType() schema.SchemaValidateDiagFunc {
 	}
 }
 
+// validateEvictionPolicyType function verify bucket eviction policy type
+// Allowed values:
+// - fullEviction
+// - valueOnly
+// - nruEviction
+// - noEviction
 func validateEvictionPolicyType() schema.SchemaValidateDiagFunc {
 	return func(i interface{}, c cty.Path) diag.Diagnostics {
 		var diags diag.Diagnostics
@@ -69,6 +79,11 @@ func validateEvictionPolicyType() schema.SchemaValidateDiagFunc {
 	}
 }
 
+// validateCompressionMode function verify bucket compression mode
+// Allowed values:
+// - off
+// - passive
+// - active
 func validateCompressionMode() schema.SchemaValidateDiagFunc {
 	return func(i interface{}, c cty.Path) diag.Diagnostics {
 		var diags diag.Diagnostics
@@ -98,6 +113,10 @@ func validateCompressionMode() schema.SchemaValidateDiagFunc {
 	}
 }
 
+// validateConflictResolutionType function verify bucket conflict resolution type
+// Allowed values:
+// - lww
+// - seqno
 func validateConflictResolutionType() schema.SchemaValidateDiagFunc {
 	return func(i interface{}, c cty.Path) diag.Diagnostics {
 		var diags diag.Diagnostics
@@ -125,6 +144,12 @@ func validateConflictResolutionType() schema.SchemaValidateDiagFunc {
 	}
 }
 
+// validateDurabilityLevel function verify bucket durability level
+// Allowed values:
+// - none
+// - majority
+// - majorityAndPersistActive
+// - persistToMajority
 func validateDurabilityLevel() schema.SchemaValidateDiagFunc {
 	return func(i interface{}, c cty.Path) diag.Diagnostics {
 		var diags diag.Diagnostics

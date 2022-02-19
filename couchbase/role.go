@@ -12,16 +12,18 @@ func roleStructure() *schema.Resource {
 	return &schema.Resource{
 		Schema: map[string]*schema.Schema{
 			keySecurityGroupRoleName: {
-				Type:     schema.TypeString,
-				Required: true,
-				Optional: false,
-				ForceNew: false,
+				Type:        schema.TypeString,
+				Required:    true,
+				Optional:    false,
+				ForceNew:    false,
+				Description: "Role name",
 			},
 			keySecurityGroupRoleBucket: {
-				Type:     schema.TypeString,
-				Required: true,
-				Optional: false,
-				ForceNew: false,
+				Type:        schema.TypeString,
+				Required:    true,
+				Optional:    false,
+				ForceNew:    false,
+				Description: "Bucket name",
 			},
 			keySecurityGroupRoleScope: {
 				Type:             schema.TypeString,
@@ -29,6 +31,7 @@ func roleStructure() *schema.Resource {
 				Default:          "",
 				ForceNew:         false,
 				ValidateDiagFunc: validateRoleParameter(),
+				Description:      "Scope within a bucket",
 			},
 			keySecurityGroupRoleCollection: {
 				Type:             schema.TypeString,
@@ -36,6 +39,7 @@ func roleStructure() *schema.Resource {
 				Default:          "",
 				ForceNew:         false,
 				ValidateDiagFunc: validateRoleParameter(),
+				Description:      "Collection within a scope",
 			},
 		},
 	}

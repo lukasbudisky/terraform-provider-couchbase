@@ -50,6 +50,7 @@ func resourceSecurityGroup() *schema.Resource {
 	}
 }
 
+// groupSettings return group settings structure
 func groupSettings(
 	name string,
 	description string,

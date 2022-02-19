@@ -1,6 +1,7 @@
 package couchbase
 
 import (
+	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -10,21 +11,32 @@ import (
 )
 
 // getBucketConflictResolutionType custom fuction for get bucket conflict resolution type because couchbase golang sdk doesn't support to get conflict
-// resolution type in gocb v2 version
+// resolution type in gocb v2 version. Currently gocb v2 doesn't support some operations so we must use http/https
+// and client-to-node ports for connection. You can read more about ports here:
+// https://docs.couchbase.com/server/current/install/install-ports.html
 func (cc *CouchbaseConnection) getBucketConflictResolutionType(bucketName string) (*gocb.ConflictResolutionType, error) {
-	var conflictResolutionType conflictResolutionType
-	var schema string
-	client := http.Client{Timeout: cc.ClusterOptions.TimeoutsConfig.ManagementTimeout}
+	var (
+		conflictResolutionType conflictResolutionType
+		scheme                 string
+	)
 
-	// TODO
 	if cc.ClusterOptions.SecurityConfig.TLSRootCAs == nil {
-		schema = "http"
+		scheme = "http"
 	} else {
-		schema = "https"
+		scheme = "https"
 	}
 
-	// TODO https
-	req, err := http.NewRequest(http.MethodGet, fmt.Sprintf("%s://%s:%d/pools/default/buckets/%s", schema, cc.Address, cc.Port, bucketName), nil)
+	client := http.Client{
+		Timeout: cc.ClusterOptions.TimeoutsConfig.ManagementTimeout,
+		Transport: &http.Transport{
+			TLSClientConfig: &tls.Config{
+				InsecureSkipVerify: cc.ClusterOptions.SecurityConfig.TLSSkipVerify,
+				RootCAs:            cc.ClusterOptions.SecurityConfig.TLSRootCAs,
+			},
+		},
+	}
+
+	req, err := http.NewRequest(http.MethodGet, fmt.Sprintf("%s://%s:%d/pools/default/buckets/%s", scheme, cc.Address, cc.ClientPort, bucketName), nil)
 	if err != nil {
 		return nil, err
 	}

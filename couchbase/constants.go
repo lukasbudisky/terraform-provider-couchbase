@@ -5,11 +5,15 @@ const (
 	terraformVersion = "0.14.9"
 
 	// Provider variables
-	providerAddress           = "address"
-	providerPort              = "port"
-	providerUsername          = "username"
-	providerPassword          = "password"
-	providerConnectionTimeout = "management_timeout"
+	providerAddress               = "address"
+	providerClientPort            = "client_port"
+	providerNodePort              = "node_port"
+	providerUsername              = "username"
+	providerPassword              = "password"
+	providerConnectionTimeout     = "management_timeout"
+	providerTLSRootCertSkipVerify = "tls_root_cert_skip_verify"
+	providerAllowSaslMechanism    = "allow_sasl_mechanism"
+	providerTLSRootCert           = "tls_root_cert"
 
 	// Bucket resource contants
 	keyBucketName                   = "name"

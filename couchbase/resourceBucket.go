@@ -57,7 +57,7 @@ func resourceBucket() *schema.Resource {
 			},
 			keyBucketNumReplicas: {
 				Type:        schema.TypeInt,
-				Default:     1,
+				Default:     0,
 				ForceNew:    false,
 				Optional:    true,
 				Description: "Number of bucket replicas",
@@ -127,6 +127,7 @@ func resourceBucket() *schema.Resource {
 	}
 }
 
+// bucketSettings return bucket settings structure
 func bucketSettings(
 	name string,
 	flushEnabled bool,

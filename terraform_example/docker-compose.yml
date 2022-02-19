@@ -1,0 +1,22 @@
+---
+version: '3.8'
+
+services:
+  couchase:
+    container_name: couchbase
+    image: couchbase:latest
+    ports:
+      - "0.0.0.0:8091-8094:8091-8094"
+      - "0.0.0.0:11210:11210"
+      - "0.0.0.0:18091-18096:18091-18096"
+    networks:
+      - couchbase
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://127.0.0.1:8091/pools"]
+      interval: 5s
+      timeout: 10s
+      retries: 3
+networks:
+  couchbase:
+    external:
+      name: "couchbase"
