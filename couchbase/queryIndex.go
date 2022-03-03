@@ -34,7 +34,7 @@ func convertFieldsToList(rawFields []interface{}) ([]string, error) {
 		if !ok {
 			return nil, fmt.Errorf("cannot convert query index field")
 		}
-		fields = append(fields, strings.Replace(sub, "`", "", -1))
+		fields = append(fields, sub)
 	}
 	return fields, nil
 }
