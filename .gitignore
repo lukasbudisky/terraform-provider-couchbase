@@ -21,3 +21,9 @@ crash.log
 .terraform/
 *.tfstate
 *.tfstate.backup
+
+# Provider binary file
+terraform-provider-*
+
+# Mac OS files
+.DS_Store

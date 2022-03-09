@@ -62,6 +62,7 @@ func resourceSecurityUser() *schema.Resource {
 	}
 }
 
+// userSettings return user settings structure
 func userSettings(
 	username string,
 	displayName string,

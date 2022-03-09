@@ -8,23 +8,27 @@ import (
 
 const testAccUserConfig_basic = `
 resource "couchbase_security_user" "testAccUserConfig_basic" {
-	username = "testAccUser_basic"
-	password = "password"
-  }
-`
-
-const testAccUserConfig_groups = `
-resource "couchbase_security_group" "group" {
-	name        = "testAccUser_group"
-	description = "user group"
+	username = "testAccUserConfig_basic_name"
+	password = "testAccUserConfig_basic_password"
 }
-resource "couchbase_security_user" "testAccUserConfig_basic" {
-	username = "testAccUser_groups"
-	password = "password"
-	groups = [couchbase_security_group.group.name]
-  }
 `
 
+const testAccUserConfig_extended = `
+resource "couchbase_security_group" "group" {
+	name        = "testAccUserConfig_extended_group_name"
+	description = "testAccUserConfig_extended_group_description"
+}
+
+resource "couchbase_security_user" "testAccUserConfig_basic" {
+	username = "testAccUserConfig_extended_username"
+	password = "testAccUserConfig_extended_password"
+	groups = [couchbase_security_group.group.name]
+}
+`
+
+// TestAccUser function verify
+// - user basic configuration
+// - user extended configuration
 func TestAccUser(t *testing.T) {
 	resource.Test(t, resource.TestCase{
 		PreCheck:  func() { testAccPreCheck(t) },
@@ -33,19 +37,22 @@ func TestAccUser(t *testing.T) {
 			{
 				Config: testAccUserConfig_basic,
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("couchbase_security_user.testAccUserConfig_basic", "username", "testAccUser_basic"),
-					resource.TestCheckResourceAttr("couchbase_security_user.testAccUserConfig_basic", "password", "password"),
+					resource.TestCheckResourceAttr("couchbase_security_user.testAccUserConfig_basic", "id", "testAccUserConfig_basic_name"),
+					resource.TestCheckResourceAttr("couchbase_security_user.testAccUserConfig_basic", "username", "testAccUserConfig_basic_name"),
+					resource.TestCheckResourceAttr("couchbase_security_user.testAccUserConfig_basic", "password", "testAccUserConfig_basic_password"),
 					resource.TestCheckNoResourceAttr("couchbase_security_user.testAccUserConfig_basic", "groups"),
 				),
 			},
 			{
-				Config: testAccUserConfig_groups,
+				Config: testAccUserConfig_extended,
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("couchbase_security_group.group", "name", "testAccUser_group"),
-					resource.TestCheckResourceAttr("couchbase_security_group.group", "description", "user group"),
-					resource.TestCheckResourceAttr("couchbase_security_user.testAccUserConfig_basic", "username", "testAccUser_groups"),
-					resource.TestCheckResourceAttr("couchbase_security_user.testAccUserConfig_basic", "password", "password"),
-					resource.TestCheckResourceAttr("couchbase_security_user.testAccUserConfig_basic", "groups", "testAccUser_group"),
+					resource.TestCheckResourceAttr("couchbase_security_group.group", "id", "testAccUserConfig_extended_group_name"),
+					resource.TestCheckResourceAttr("couchbase_security_group.group", "name", "testAccUserConfig_extended_group_name"),
+					resource.TestCheckResourceAttr("couchbase_security_group.group", "description", "testAccUserConfig_extended_group_description"),
+					resource.TestCheckResourceAttr("couchbase_security_user.testAccUserConfig_basic", "id", "testAccUserConfig_extended_username"),
+					resource.TestCheckResourceAttr("couchbase_security_user.testAccUserConfig_basic", "username", "testAccUserConfig_extended_username"),
+					resource.TestCheckResourceAttr("couchbase_security_user.testAccUserConfig_basic", "password", "testAccUserConfig_extended_password"),
+					resource.TestCheckResourceAttr("couchbase_security_user.testAccUserConfig_basic", "groups.0", "testAccUserConfig_extended_group_name"),
 				),
 			},
 		},

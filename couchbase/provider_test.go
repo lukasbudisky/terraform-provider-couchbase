@@ -4,6 +4,7 @@ import (
 	"context"
 	"os"
 	"testing"
+	"time"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/terraform"
@@ -30,14 +31,15 @@ func TestProvider_impl(t *testing.T) {
 }
 
 func testAccPreCheck(t *testing.T) {
-	for _, name := range []string{"CB_ADDRESS", "CB_PORT", "CB_USERNAME", "CB_PASSWORD"} {
+	for _, name := range []string{"CB_ADDRESS", "CB_CLIENT_PORT", "CB_NODE_PORT", "CB_USERNAME", "CB_PASSWORD"} {
 		if v := os.Getenv(name); v == "" {
-			t.Fatal("CB_ADDRESS, CB_PORT, CB_USERNAME, CB_PASSWORD and optionally CB_MANAGEMENT_TIMEOUT must be set for acceptance tests")
+			t.Fatal("CB_ADDRESS, CB_CLIENT_PORT, CB_NODE_PORT, CB_USERNAME, CB_PASSWORD and optionally CB_MANAGEMENT_TIMEOUT must be set for acceptance tests")
 		}
 	}
 
-	// TODO
-	err := testAccProvider.Configure(context.TODO(), terraform.NewResourceConfigRaw(nil))
+	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(120)*time.Second)
+	defer cancel()
+	err := testAccProvider.Configure(ctx, terraform.NewResourceConfigRaw(nil))
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -3,6 +3,10 @@ kind: pipeline
 type: docker
 name: terraform-provider-couchbase
 
+platform:
+  os: linux
+  arch: amd64
+
 clone:
   depth: 1
 
@@ -10,37 +14,35 @@ steps:
   - name: linter
     image: golang
     commands:
-      - apt-get update && apt-get install -yy python3 python3-pip shellcheck
+      - apt-get update && apt-get install -yy python3 python3-pip shellcheck build-essential
       - pip3 install yamllint
-      - go get -u golang.org/x/lint/golint
-      - find . -name "*.sh" | xargs shellcheck -s sh
-      - yamllint .
-      - golint ./...
+      - go install golang.org/x/lint/golint
+      - make linters
+
   - name: run tests
     image: golang
+    commands:
+      - make cbinit
+      - make test
+      - make testacc
     environment:
       CB_ADDRESS: couchbase
-      CB_PORT: 8091
+      CB_CLIENT_PORT: 8091
+      CB_NODE_PORT: 11210
+      CB_PASSWORD: 123456
       CB_USERNAME: Administrator
-      CB_PASSWORD: Administrator
-    commands:
-      - go clean -testcache
-      - go test -v ./...
+
   - name: notify slack
-    image: plugins/slack
-    when:
-      status:
-        - success
-        - failure
+    image: golang
     settings:
-      webhook:
-        from_secret: slack_webhook
-      channel: drone
-      username: drone
+      channel:
+        from_secret: slack_channel
       link_names: true
-      template: >
+      username:
+        from_secret: slack_username
+      template: |
         {{#success build.status}}
-          *✓ Succeeded - project {{repo.name}}:*
+          *✅ Succeeded - project {{repo.name}}:*
           - build {{build.number}}
           - commit {{build.commit}}
           - branch {{build.branch}}
@@ -48,7 +50,7 @@ steps:
           - PR {{build.pull}}
           - link {{build.link}}
         {{else}}
-          *✖︎ Failed - project {{repo.name}}:*
+          *❌ Failed - project {{repo.name}}:*
           - build {{build.number}}
           - commit {{build.commit}}
           - branch {{build.branch}}
@@ -56,6 +58,27 @@ steps:
           - PR {{build.pull}}
           - link {{build.link}}
         {{/success}}
+      webhook:
+        from_secret: slack_webhook
+    when:
+      status:
+        - success
+        - failure
+
+  - name: release
+    image: goreleaser/goreleaser
+    commands:
+      - goreleaser release
+    environment:
+      GITHUB_TOKEN:
+        from_secret: github_token
+    when:
+      event:
+        - tag
+
+services:
+  - name: couchbase
+    image: couchbase
 
 volumes:
   - name: docker_sock
@@ -64,13 +87,14 @@ volumes:
 
 trigger:
   branch:
-    - dev
     - main
   event:
     - push
     - pull_request
     - tag
 
-services:
-  - name: couchbase
-    image: couchbase
+---
+kind: signature
+hmac: 788240a36eb57d0dc27bbec122aa45c9b2eedf5a9639769134c546c4255f1489
+
+...
