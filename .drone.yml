@@ -32,39 +32,6 @@ steps:
       CB_PASSWORD: 123456
       CB_USERNAME: Administrator
 
-  - name: notify slack
-    image: golang
-    settings:
-      channel:
-        from_secret: slack_channel
-      link_names: true
-      username:
-        from_secret: slack_username
-      template: |
-        {{#success build.status}}
-          *✅ Succeeded - project {{repo.name}}:*
-          - build {{build.number}}
-          - commit {{build.commit}}
-          - branch {{build.branch}}
-          - event {{build.event}}
-          - PR {{build.pull}}
-          - link {{build.link}}
-        {{else}}
-          *❌ Failed - project {{repo.name}}:*
-          - build {{build.number}}
-          - commit {{build.commit}}
-          - branch {{build.branch}}
-          - event {{build.event}}
-          - PR {{build.pull}}
-          - link {{build.link}}
-        {{/success}}
-      webhook:
-        from_secret: slack_webhook
-    when:
-      status:
-        - success
-        - failure
-
   - name: release
     image: goreleaser/goreleaser
     commands:
@@ -95,6 +62,6 @@ trigger:
 
 ---
 kind: signature
-hmac: 788240a36eb57d0dc27bbec122aa45c9b2eedf5a9639769134c546c4255f1489
+hmac: a604c1918bf81e413e1c528bab1a3319bddbaad567f10775738ffc5b08d1bd9a
 
 ...
