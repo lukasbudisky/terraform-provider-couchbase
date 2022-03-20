@@ -1,7 +1,6 @@
 ---
 layout: "couchbase"
 page_title: "terraform-provider-couchbase resource: couchbase_primary_query_index"
-subcategory: "docs-couchbase-resource-couchbase_primary_query_index"
 sidebar_current: "docs-couchbase-resource-couchbase_primary_query_index"
 description: |-
   Manage primary query indexex in couchbase
