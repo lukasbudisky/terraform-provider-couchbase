@@ -32,17 +32,6 @@ steps:
       CB_PASSWORD: 123456
       CB_USERNAME: Administrator
 
-  - name: release
-    image: goreleaser/goreleaser
-    commands:
-      - goreleaser release
-    environment:
-      GITHUB_TOKEN:
-        from_secret: github_token
-    when:
-      event:
-        - tag
-
 services:
   - name: couchbase
     image: couchbase
@@ -62,6 +51,6 @@ trigger:
 
 ---
 kind: signature
-hmac: a604c1918bf81e413e1c528bab1a3319bddbaad567f10775738ffc5b08d1bd9a
+hmac: 17e04823149f7f9b47046dcb6c51fb0fa7489d151894a6b0afeba538bd444b74
 
 ...

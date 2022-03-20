@@ -1,7 +1,6 @@
 ---
 layout: "couchbase"
 page_title: "terraform-provider-couchbase resource: couchbase_bucket_manager"
-subcategory: "docs-couchbase-resource-couchbase_bucket_manager"
 sidebar_current: "docs-couchbase-resource-couchbase_bucket_manager"
 description: |-
   Manage buckets in couchbase

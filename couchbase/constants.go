@@ -58,5 +58,8 @@ const (
 	keyQueryIndexCondition  = "condition"
 
 	// Others
-	queryIndexTimeoutCreate = 300
+	queryIndexTimeoutCreate    = 300
+	bucketTimeoutCreate        = 300
+	securityUserTimeoutCreate  = 300
+	securityGroupTimeoutCreate = 300
 )

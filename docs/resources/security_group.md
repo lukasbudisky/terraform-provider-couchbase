@@ -1,7 +1,6 @@
 ---
 layout: "couchbase"
 page_title: "terraform-provider-couchbase resource: couchbase_security_group"
-subcategory: "docs-couchbase-resource-couchbase_security_group"
 sidebar_current: "docs-couchbase-resource-couchbase_security_group"
 description: |-
   Manage groups in couchbase

@@ -1,7 +1,6 @@
 ---
 layout: "couchbase"
 page_title: "terraform-provider-couchbase resource: couchbase_security_user"
-subcategory: "docs-couchbase-resource-couchbase_security_user"
 sidebar_current: "docs-couchbase-resource-couchbase_security_user"
 description: |-
   Manage users in couchbase
