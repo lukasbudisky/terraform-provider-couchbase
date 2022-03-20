@@ -3,9 +3,12 @@ package couchbase
 import (
 	"context"
 	"errors"
+	"fmt"
+	"time"
 
 	"github.com/couchbase/gocb/v2"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
@@ -112,7 +115,22 @@ func createSecurityUser(c context.Context, d *schema.ResourceData, m interface{}
 		return diag.FromErr(err)
 	}
 
-	d.SetId(us.Username)
+	if err := resource.RetryContext(c, time.Duration(securityUserTimeoutCreate)*time.Second, func() *resource.RetryError {
+
+		_, err := couchbase.UserManager.GetUser(us.Username, nil)
+		if err != nil && errors.Is(err, gocb.ErrUserNotFound) {
+			return resource.RetryableError(err)
+		}
+
+		if err != nil {
+			return resource.NonRetryableError(fmt.Errorf("can't create security user: %s error: %s", us.Username, err))
+		}
+
+		d.SetId(us.Username)
+		return nil
+	}); err != nil {
+		return diag.FromErr(err)
+	}
 
 	return readSecurityUser(c, d, m)
 }
