@@ -65,13 +65,13 @@ The following arguments are supported
 <a href="https://docs.couchbase.com/ruby-sdk/current/ref/client-settings.html">Client Settings / Timeouts</a>
 
 ## Example usage
-####Minimal configuration
+#### Minimal configuration
 ```
 terraform {
   required_version = ">= 0.13"
   required_providers {
     couchbase = {
-      version = "~> 0.0.3"
+      version = "~> 0.0.5"
       source  = "budisky.com/couchbase/couchbase"
     }
   }
@@ -87,13 +87,13 @@ provider "couchbase" {
 }
 ```
 
-####TLS Configuration
+#### TLS Configuration
 ```
 terraform {
   required_version = ">= 0.13"
   required_providers {
     couchbase = {
-      version = "~> 0.0.3"
+      version = "~> 0.0.5"
       source  = "budisky.com/couchbase/couchbase"
     }
   }
@@ -112,13 +112,13 @@ provider "couchbase" {
 }
 ```
 
-####Example create new bucket
+#### Example create new bucket
 ```
 terraform {
   required_version = ">= 0.13"
   required_providers {
     couchbase = {
-      version = "~> 0.0.3"
+      version = "~> 0.0.5"
       source  = "budisky.com/couchbase/couchbase"
     }
   }

@@ -160,7 +160,8 @@ func validateDurabilityLevel() schema.SchemaValidateDiagFunc {
 		}
 
 		switch gocb.DurabilityLevel(uint8(value)) {
-		case gocb.DurabilityLevelNone,
+		case
+			gocb.DurabilityLevelNone,
 			gocb.DurabilityLevelMajority,
 			gocb.DurabilityLevelMajorityAndPersistOnMaster,
 			gocb.DurabilityLevelPersistToMajority:
@@ -169,7 +170,7 @@ func validateDurabilityLevel() schema.SchemaValidateDiagFunc {
 			diags = append(diags, diag.Diagnostic{
 				Severity: diag.Error,
 				Summary:  fmt.Sprintf("Durability level doesn't exist %s\n", i),
-				Detail: fmt.Sprintf("Durability level must be:\n%d\n%d\n\n%d\n%d",
+				Detail: fmt.Sprintf("Durability level must be:\n%d\n%d\n%d\n%d",
 					gocb.DurabilityLevelNone,
 					gocb.DurabilityLevelMajority,
 					gocb.DurabilityLevelMajorityAndPersistOnMaster,

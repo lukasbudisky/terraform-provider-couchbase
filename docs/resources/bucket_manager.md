@@ -41,10 +41,10 @@ The following arguments are supported
     </ul>
   <li><b>durability_level</b> (Number) Durability level</li>
     <ul>
-      <li>0</li>
       <li>1</li>
       <li>2</li>
       <li>3</li>
+      <li>4</li>
     </ul>
   <li><b>eviction_policy_type</b> (String) Eviction policy type</li>
     <ul>

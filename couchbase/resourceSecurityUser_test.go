@@ -22,7 +22,7 @@ resource "couchbase_security_group" "group" {
 resource "couchbase_security_user" "testAccUserConfig_basic" {
 	username = "testAccUserConfig_extended_username"
 	password = "testAccUserConfig_extended_password"
-	groups = [couchbase_security_group.group.name]
+	groups   = [couchbase_security_group.group.name]
 }
 `
 
