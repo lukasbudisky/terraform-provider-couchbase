@@ -12,11 +12,11 @@ clone:
 
 steps:
   - name: linter
-    image: golang
+    image: golang:latest
     commands:
       - apt-get update && apt-get install -yy python3 python3-pip shellcheck build-essential
       - pip3 install yamllint
-      - go install golang.org/x/lint/golint
+      - go install "golang.org/x/lint/golint@latest"
       - make linters
 
   - name: run tests
@@ -51,6 +51,6 @@ trigger:
 
 ---
 kind: signature
-hmac: 17e04823149f7f9b47046dcb6c51fb0fa7489d151894a6b0afeba538bd444b74
+hmac: 07bec2311957fd7a91b56a76c1855359d905efd4473a664132f99600331918bd
 
 ...

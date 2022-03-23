@@ -6,19 +6,19 @@ terraform {
   required_version = ">= 0.13"
   required_providers {
     couchbase = {
-      version = "~> 0.0.3"
+      version = "~> 0.0.5"
       source  = "budisky.com/couchbase/couchbase"
     }
   }
 }
 
 provider "couchbase" {
-  address                   = "127.0.0.1"
-  client_port               = 8091
-  node_port                 = 11210
-  username                  = "Administrator"
-  password                  = "123456"
-  management_timeout        = 10
+  address            = "127.0.0.1"
+  client_port        = 8091
+  node_port          = 11210
+  username           = "Administrator"
+  password           = "123456"
+  management_timeout = 10
 }
 
 ###########

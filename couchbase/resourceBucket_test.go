@@ -20,7 +20,7 @@ resource "couchbase_bucket_manager" "bucket" {
 	bucket_type			     = "membase"
 	compression_mode         = "passive"
 	conflict_resolution_type = "seqno"
-	durability_level		 = 0
+	durability_level		 = 1
 	eviction_policy_type     = "valueOnly"
 	flush_enabled            = false
 	max_expire               = 0
@@ -52,7 +52,7 @@ func TestAccBucket(t *testing.T) {
 					resource.TestCheckResourceAttr("couchbase_bucket_manager.bucket", "bucket_type", "membase"),
 					resource.TestCheckResourceAttr("couchbase_bucket_manager.bucket", "compression_mode", "passive"),
 					resource.TestCheckResourceAttr("couchbase_bucket_manager.bucket", "conflict_resolution_type", "seqno"),
-					resource.TestCheckResourceAttr("couchbase_bucket_manager.bucket", "durability_level", "0"),
+					resource.TestCheckResourceAttr("couchbase_bucket_manager.bucket", "durability_level", "1"),
 					resource.TestCheckResourceAttr("couchbase_bucket_manager.bucket", "eviction_policy_type", "valueOnly"),
 					resource.TestCheckResourceAttr("couchbase_bucket_manager.bucket", "flush_enabled", "false"),
 					resource.TestCheckResourceAttr("couchbase_bucket_manager.bucket", "max_expire", "0"),

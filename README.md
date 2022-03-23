@@ -1,9 +1,11 @@
 # Terraform provider for couchbase
+[![Build Status](https://drone.budisky.com/api/badges/lukasbudisky/terraform-provider-couchbase/status.svg)](https://drone.budisky.com/lukasbudisky/terraform-provider-couchbase)
+
 Terraform provider for Couchbase allow manage resources in couchbase cluster
 
 ## Requirements
 - terraform 0.13.x
-- go 1.17.6 (for plugin build)
+- go 1.18 (for plugin build)
 - docker-compose v2.2.3
 - docker 4.4.2
 
@@ -51,7 +53,7 @@ terraform {
   required_version = ">= 0.13"
   required_providers {
     couchbase = {
-      version = "~> 0.0.3"
+      version = "~> 0.0.5"
       source  = "budisky.com/couchbase/couchbase"
     }
   }
@@ -74,7 +76,7 @@ terraform {
   required_version = ">= 0.13"
   required_providers {
     couchbase = {
-      version = "~> 0.0.3"
+      version = "~> 0.0.5"
       source  = "budisky.com/couchbase/couchbase"
     }
   }
