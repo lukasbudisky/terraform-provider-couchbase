@@ -49,7 +49,7 @@ func resourcePrimaryQueryIndex() *schema.Resource {
 func createPrimaryQueryIndex(c context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	const deferred = true
 
-	couchbase, diags := m.(*CouchbaseConnection).CouchbaseInitialization()
+	couchbase, diags := m.(*Connection).CouchbaseInitialization()
 	if diags != nil {
 		return diags
 	}
@@ -73,10 +73,9 @@ func createPrimaryQueryIndex(c context.Context, d *schema.ResourceData, m interf
 		if idx.IsPrimary && idx.Name == indexName {
 			if idx.State != getDeferredState(deferred) {
 				return resource.RetryableError(fmt.Errorf("primary query index: %s bucket: %s creation in progress: %s", indexName, bucketName, idx.State))
-			} else {
-				d.SetId(idx.Id)
-				return nil
 			}
+			d.SetId(idx.ID)
+			return nil
 		}
 
 		return resource.NonRetryableError(fmt.Errorf("primary query index doesn't exist index: %s bucket: %s", indexName, bucketName))
@@ -89,13 +88,13 @@ func createPrimaryQueryIndex(c context.Context, d *schema.ResourceData, m interf
 
 func readPrimaryQueryIndex(c context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 
-	couchbase, diags := m.(*CouchbaseConnection).CouchbaseInitialization()
+	couchbase, diags := m.(*Connection).CouchbaseInitialization()
 	if diags != nil {
 		return diags
 	}
 	defer couchbase.ConnectionCLose()
 
-	idx, err := couchbase.readQueryIndexById(d.Id())
+	idx, err := couchbase.readQueryIndexByID(d.Id())
 	if err != nil && errors.Is(err, gocb.ErrIndexNotFound) {
 		d.SetId("")
 		return diags
@@ -112,8 +111,8 @@ func readPrimaryQueryIndex(c context.Context, d *schema.ResourceData, m interfac
 	if err := d.Set(keyPrimaryQueryIndexName, idx.Name); err != nil {
 		diags = append(diags, *diagForValueSet(keyPrimaryQueryIndexName, idx.Name, err))
 	}
-	if err := d.Set(keyPrimaryQueryIndexBucket, idx.KeyspaceId); err != nil {
-		diags = append(diags, *diagForValueSet(keyPrimaryQueryIndexBucket, idx.KeyspaceId, err))
+	if err := d.Set(keyPrimaryQueryIndexBucket, idx.KeyspaceID); err != nil {
+		diags = append(diags, *diagForValueSet(keyPrimaryQueryIndexBucket, idx.KeyspaceID, err))
 	}
 
 	return diags
@@ -121,7 +120,7 @@ func readPrimaryQueryIndex(c context.Context, d *schema.ResourceData, m interfac
 
 func deletePrimaryQueryIndex(c context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 
-	couchbase, diags := m.(*CouchbaseConnection).CouchbaseInitialization()
+	couchbase, diags := m.(*Connection).CouchbaseInitialization()
 	if diags != nil {
 		return diags
 	}

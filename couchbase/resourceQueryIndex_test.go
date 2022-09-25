@@ -6,7 +6,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 )
 
-const testAccQueryIndex_extended = `
+const testAccQueryIndexExtended = `
 resource "couchbase_bucket_manager" "bucket" {
 	name                     = "testAccPrimaryQueryIndex_extended_bucket_name"
 	ram_quota_mb             = 100
@@ -38,7 +38,7 @@ func TestAccQueryIndex(t *testing.T) {
 		Providers: testAccProviders,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccQueryIndex_extended,
+				Config: testAccQueryIndexExtended,
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr("couchbase_bucket_manager.bucket", "name", "testAccPrimaryQueryIndex_extended_bucket_name"),
 					resource.TestCheckResourceAttr("couchbase_bucket_manager.bucket", "ram_quota_mb", "100"),

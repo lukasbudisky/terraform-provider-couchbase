@@ -5,7 +5,7 @@ Terraform provider for Couchbase allow manage resources in couchbase cluster
 
 ## Requirements
 - terraform 0.13.x
-- go 1.18 (for plugin build)
+- go 1.19 (for plugin build)
 - docker-compose v2.2.3
 - docker 4.4.2
 

@@ -6,14 +6,14 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 )
 
-const testAccUserConfig_basic = `
+const testAccUserConfigBasic = `
 resource "couchbase_security_user" "testAccUserConfig_basic" {
 	username = "testAccUserConfig_basic_name"
 	password = "testAccUserConfig_basic_password"
 }
 `
 
-const testAccUserConfig_extended = `
+const testAccUserConfigExtended = `
 resource "couchbase_security_group" "group" {
 	name        = "testAccUserConfig_extended_group_name"
 	description = "testAccUserConfig_extended_group_description"
@@ -35,7 +35,7 @@ func TestAccUser(t *testing.T) {
 		Providers: testAccProviders,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccUserConfig_basic,
+				Config: testAccUserConfigBasic,
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr("couchbase_security_user.testAccUserConfig_basic", "id", "testAccUserConfig_basic_name"),
 					resource.TestCheckResourceAttr("couchbase_security_user.testAccUserConfig_basic", "username", "testAccUserConfig_basic_name"),
@@ -44,7 +44,7 @@ func TestAccUser(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccUserConfig_extended,
+				Config: testAccUserConfigExtended,
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr("couchbase_security_group.group", "id", "testAccUserConfig_extended_group_name"),
 					resource.TestCheckResourceAttr("couchbase_security_group.group", "name", "testAccUserConfig_extended_group_name"),
