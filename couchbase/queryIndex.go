@@ -14,13 +14,13 @@ import (
 // gocb v2 doesn't have ID in structure
 type queryIndex struct {
 	Condition   string   `json:"condition"`
-	DatastoreId string   `json:"datastore_id"`
-	Id          string   `json:"id"`
+	DatastoreID string   `json:"datastore_id"`
+	ID          string   `json:"id"`
 	IndexKey    []string `json:"index_key"`
 	IsPrimary   bool     `json:"is_primary"`
-	KeyspaceId  string   `json:"keyspace_id"`
+	KeyspaceID  string   `json:"keyspace_id"`
 	Name        string   `json:"name"`
-	NamespaceId string   `json:"namespace_id"`
+	NamespaceID string   `json:"namespace_id"`
 	State       string   `json:"state"`
 	Using       string   `json:"using"`
 }
@@ -43,13 +43,12 @@ func convertFieldsToList(rawFields []interface{}) ([]string, error) {
 func getDeferredState(state bool) string {
 	if state {
 		return "deferred"
-	} else {
-		return "online"
 	}
+	return "online"
 }
 
-// readQueryIndexById function read query indexes based on ID
-func (cc *CouchbaseConfiguration) readQueryIndexById(id string) (*queryIndex, error) {
+// readQueryIndexByID function read query indexes based on ID
+func (cc *Configuration) readQueryIndexByID(id string) (*queryIndex, error) {
 	q := "SELECT `indexes`.* FROM system:indexes WHERE id=? AND `using`=\"gsi\""
 	rows, err := cc.Cluster.Query(q, &gocb.QueryOptions{
 		PositionalParameters: []interface{}{id},
@@ -65,20 +64,18 @@ func (cc *CouchbaseConfiguration) readQueryIndexById(id string) (*queryIndex, er
 		err := rows.Row(&index)
 		if err != nil {
 			return nil, err
-		} else {
-			break
 		}
+		break
 	}
 	defer rows.Close()
 	if index == nil {
-		return nil, fmt.Errorf("index not found id: %s", id)
-	} else {
-		return index, nil
+		return nil, fmt.Errorf("index not found id: %s; %w", id, gocb.ErrIndexNotFound)
 	}
+	return index, nil
 }
 
 // readQueryIndexByName function read query indexes based on index name and bucket name
-func (cc *CouchbaseConfiguration) readQueryIndexByName(indexName, bucketName string) (*queryIndex, error) {
+func (cc *Configuration) readQueryIndexByName(indexName, bucketName string) (*queryIndex, error) {
 	q := "SELECT `indexes`.* FROM system:indexes WHERE keyspace_id=? AND name=? AND `using`=\"gsi\""
 	rows, err := cc.Cluster.Query(q, &gocb.QueryOptions{
 		PositionalParameters: []interface{}{bucketName, indexName},
@@ -94,20 +91,18 @@ func (cc *CouchbaseConfiguration) readQueryIndexByName(indexName, bucketName str
 		err := rows.Row(&index)
 		if err != nil {
 			return nil, err
-		} else {
-			break
 		}
+		break
 	}
 	defer rows.Close()
 	if index == nil {
-		return nil, fmt.Errorf("index not found index: %s bucket:%s", indexName, bucketName)
-	} else {
-		return index, nil
+		return nil, fmt.Errorf("index not found index: %s bucket:%s; %w", indexName, bucketName, gocb.ErrIndexNotFound)
 	}
+	return index, nil
 }
 
 // createPrimaryQueryIndex custom functon which support primary query index creation with deferred state, number of replicas
-func (cc *CouchbaseConfiguration) createPrimaryQueryIndex(indexName, bucketName string, deferred bool, numReplica int) error {
+func (cc *Configuration) createPrimaryQueryIndex(indexName, bucketName string, deferred bool, numReplica int) error {
 	q := fmt.Sprintf("CREATE PRIMARY INDEX `%s` ON `%s` WITH {\"defer_build\":%t, \"num_replica\":%d}", indexName, bucketName, deferred, numReplica)
 	rows, err := cc.Cluster.Query(q, nil)
 	if err != nil {
@@ -119,7 +114,7 @@ func (cc *CouchbaseConfiguration) createPrimaryQueryIndex(indexName, bucketName 
 }
 
 // createQueryIndex custom functon which support query index creation with fields parameters and conditions, deferred state, number of replicas
-func (cc *CouchbaseConfiguration) createQueryIndex(indexName, bucketName string, fields []string, condition string, deferred bool, numReplica int) error {
+func (cc *Configuration) createQueryIndex(indexName, bucketName string, fields []string, condition string, deferred bool, numReplica int) error {
 	if len(fields) <= 0 {
 		return fmt.Errorf("you must specify at least one field to index")
 	}

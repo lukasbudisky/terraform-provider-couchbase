@@ -176,7 +176,7 @@ func createBucket(c context.Context, d *schema.ResourceData, m interface{}) diag
 		d.Get(keyBucketDurabilityLevel).(int),
 	)
 
-	couchbase, diags := m.(*CouchbaseConnection).CouchbaseInitialization()
+	couchbase, diags := m.(*Connection).CouchbaseInitialization()
 	if diags != nil {
 		return diags
 	}
@@ -210,7 +210,7 @@ func readBucket(c context.Context, d *schema.ResourceData, m interface{}) diag.D
 
 	bucketID := d.Id()
 
-	couchbaseConf := m.(*CouchbaseConnection)
+	couchbaseConf := m.(*Connection)
 	couchbase, diags := couchbaseConf.CouchbaseInitialization()
 	if diags != nil {
 		return diags
@@ -288,7 +288,7 @@ func updateBucket(c context.Context, d *schema.ResourceData, m interface{}) diag
 
 	bucketID := d.Id()
 
-	couchbase, diags := m.(*CouchbaseConnection).CouchbaseInitialization()
+	couchbase, diags := m.(*Connection).CouchbaseInitialization()
 	if diags != nil {
 		return diags
 	}
@@ -333,7 +333,7 @@ func deleteBucket(c context.Context, d *schema.ResourceData, m interface{}) diag
 
 	bucketID := d.Id()
 
-	couchbase, diags := m.(*CouchbaseConnection).CouchbaseInitialization()
+	couchbase, diags := m.(*Connection).CouchbaseInitialization()
 	if diags != nil {
 		return diags
 	}

@@ -58,8 +58,8 @@ func validateAllowSaslMechanism() schema.SchemaValidateDiagFunc {
 	}
 }
 
-// validateTlsRootCert function validate TLS root certificate
-func validateTlsRootCert() schema.SchemaValidateDiagFunc {
+// validateTLSRootCert function validate TLS root certificate
+func validateTLSRootCert() schema.SchemaValidateDiagFunc {
 	return func(i interface{}, c cty.Path) diag.Diagnostics {
 		var diags diag.Diagnostics
 

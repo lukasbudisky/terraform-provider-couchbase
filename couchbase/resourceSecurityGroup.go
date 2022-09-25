@@ -75,7 +75,7 @@ func groupSettings(
 
 func createSecurityGroup(c context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 
-	couchbase, diags := m.(*CouchbaseConnection).CouchbaseInitialization()
+	couchbase, diags := m.(*Connection).CouchbaseInitialization()
 	if diags != nil {
 		return diags
 	}
@@ -119,7 +119,7 @@ func readSecurityGroup(c context.Context, d *schema.ResourceData, m interface{})
 
 	groupID := d.Id()
 
-	couchbase, diags := m.(*CouchbaseConnection).CouchbaseInitialization()
+	couchbase, diags := m.(*Connection).CouchbaseInitialization()
 	if diags != nil {
 		return diags
 	}
@@ -160,7 +160,7 @@ func updateSecurityGroup(c context.Context, d *schema.ResourceData, m interface{
 
 	groupID := d.Id()
 
-	couchbase, diags := m.(*CouchbaseConnection).CouchbaseInitialization()
+	couchbase, diags := m.(*Connection).CouchbaseInitialization()
 	if diags != nil {
 		return diags
 	}
@@ -195,7 +195,7 @@ func deleteSecurityGroup(c context.Context, d *schema.ResourceData, m interface{
 
 	groupID := d.Id()
 
-	couchbase, diags := m.(*CouchbaseConnection).CouchbaseInitialization()
+	couchbase, diags := m.(*Connection).CouchbaseInitialization()
 	if diags != nil {
 		return diags
 	}

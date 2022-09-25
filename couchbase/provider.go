@@ -14,6 +14,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
+// Provider function provides structure for provider parameters
 func Provider() *schema.Provider {
 	return &schema.Provider{
 		TerraformVersion: terraformVersion,
@@ -83,7 +84,7 @@ func Provider() *schema.Provider {
 				Optional:         true,
 				DefaultFunc:      schema.EnvDefaultFunc("TLS_ROOT_CERT", ""),
 				Description:      "Path to TLS Root Certificate (in PEM format)",
-				ValidateDiagFunc: validateTlsRootCert(),
+				ValidateDiagFunc: validateTLSRootCert(),
 			},
 		},
 
@@ -171,7 +172,7 @@ func providerConfigure(ctx context.Context, d *schema.ResourceData) (interface{}
 		return nil, diags
 	}
 
-	cc := &CouchbaseConnection{
+	cc := &Connection{
 		// Currently gocb v2 doesn't support some operations so we must use couchbase/couchbases and node-to-node
 		// ports for connection. You can read more about ports here:
 		// https://docs.couchbase.com/server/current/install/install-ports.html

@@ -6,14 +6,14 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 )
 
-const testAccGroupConfig_basic = `
+const testAccGroupConfigBasic = `
 resource "couchbase_security_group" "group" {
 	name        = "testAccGroup_basic_name"
 	description = "testAccGroup_basic_description"
 }
 `
 
-const testAccGroupConfig_extended = `
+const testAccGroupConfigExtended = `
 resource "couchbase_security_group" "group" {
 	name           = "testAccGroup_extended_name"
 	description    = "testAccGroup_extended_description"
@@ -36,7 +36,7 @@ func TestAccGroup(t *testing.T) {
 		Providers: testAccProviders,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccGroupConfig_basic,
+				Config: testAccGroupConfigBasic,
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr("couchbase_security_group.group", "id", "testAccGroup_basic_name"),
 					resource.TestCheckResourceAttr("couchbase_security_group.group", "name", "testAccGroup_basic_name"),
@@ -44,7 +44,7 @@ func TestAccGroup(t *testing.T) {
 				),
 			},
 			{
-				Config: testAccGroupConfig_extended,
+				Config: testAccGroupConfigExtended,
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr("couchbase_security_group.group", "id", "testAccGroup_extended_name"),
 					resource.TestCheckResourceAttr("couchbase_security_group.group", "name", "testAccGroup_extended_name"),

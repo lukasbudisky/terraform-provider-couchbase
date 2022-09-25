@@ -7,8 +7,8 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 )
 
-// CouchbaseConnection struct container information about connection parameters.
-type CouchbaseConnection struct {
+// Connection struct contain information about connection parameters.
+type Connection struct {
 	Scheme         string
 	Address        string
 	NodePort       int
@@ -22,8 +22,8 @@ type conflictResolutionType struct {
 	ConflictResolutionType gocb.ConflictResolutionType `json:"conflictResolutionType"`
 }
 
-// CouchbaseConfiguration struct contains informatio about cluster and bucket manager.
-type CouchbaseConfiguration struct {
+// Configuration struct contains information about cluster and bucket manager.
+type Configuration struct {
 	Cluster           *gocb.Cluster
 	BucketManager     *gocb.BucketManager
 	UserManager       *gocb.UserManager
@@ -31,11 +31,11 @@ type CouchbaseConfiguration struct {
 }
 
 // CouchbaseInitialization function creates connection to couchbase.
-func (cc *CouchbaseConnection) CouchbaseInitialization() (*CouchbaseConfiguration, diag.Diagnostics) {
+func (cc *Connection) CouchbaseInitialization() (*Configuration, diag.Diagnostics) {
 
 	cluster, diags := cc.ConnectionValidate()
 
-	return &CouchbaseConfiguration{
+	return &Configuration{
 		Cluster:           cluster,
 		BucketManager:     cluster.Buckets(),
 		UserManager:       cluster.Users(),
@@ -44,7 +44,7 @@ func (cc *CouchbaseConnection) CouchbaseInitialization() (*CouchbaseConfiguratio
 }
 
 // ConnectionValidate function validates connection to couchbase
-func (cc *CouchbaseConnection) ConnectionValidate() (*gocb.Cluster, diag.Diagnostics) {
+func (cc *Connection) ConnectionValidate() (*gocb.Cluster, diag.Diagnostics) {
 	var diags diag.Diagnostics
 
 	cbAddress := fmt.Sprintf("%s://%s:%d", cc.Scheme, cc.Address, cc.NodePort)
@@ -62,6 +62,6 @@ func (cc *CouchbaseConnection) ConnectionValidate() (*gocb.Cluster, diag.Diagnos
 }
 
 // ConnectionCLose close couchbase connection
-func (cc *CouchbaseConfiguration) ConnectionCLose() {
+func (cc *Configuration) ConnectionCLose() {
 	cc.Cluster.Close(nil)
 }

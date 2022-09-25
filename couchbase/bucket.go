@@ -14,7 +14,7 @@ import (
 // resolution type in gocb v2 version. Currently gocb v2 doesn't support some operations so we must use http/https
 // and client-to-node ports for connection. You can read more about ports here:
 // https://docs.couchbase.com/server/current/install/install-ports.html
-func (cc *CouchbaseConnection) getBucketConflictResolutionType(bucketName string) (*gocb.ConflictResolutionType, error) {
+func (cc *Connection) getBucketConflictResolutionType(bucketName string) (*gocb.ConflictResolutionType, error) {
 	var (
 		conflictResolutionType conflictResolutionType
 		scheme                 string

@@ -94,7 +94,7 @@ func userSettings(
 
 func createSecurityUser(c context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 
-	couchbase, diags := m.(*CouchbaseConnection).CouchbaseInitialization()
+	couchbase, diags := m.(*Connection).CouchbaseInitialization()
 	if diags != nil {
 		return diags
 	}
@@ -139,7 +139,7 @@ func readSecurityUser(c context.Context, d *schema.ResourceData, m interface{}) 
 
 	userID := d.Id()
 
-	couchbase, diags := m.(*CouchbaseConnection).CouchbaseInitialization()
+	couchbase, diags := m.(*Connection).CouchbaseInitialization()
 	if diags != nil {
 		return diags
 	}
@@ -182,7 +182,7 @@ func updateSecurityUser(c context.Context, d *schema.ResourceData, m interface{}
 
 	userID := d.Id()
 
-	couchbase, diags := m.(*CouchbaseConnection).CouchbaseInitialization()
+	couchbase, diags := m.(*Connection).CouchbaseInitialization()
 	if diags != nil {
 		return diags
 	}
@@ -219,7 +219,7 @@ func deleteSecurityUser(c context.Context, d *schema.ResourceData, m interface{}
 
 	userID := d.Id()
 
-	couchbase, diags := m.(*CouchbaseConnection).CouchbaseInitialization()
+	couchbase, diags := m.(*Connection).CouchbaseInitialization()
 	if diags != nil {
 		return diags
 	}
