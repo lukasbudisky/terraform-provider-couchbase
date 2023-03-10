@@ -68,10 +68,10 @@ The following arguments are supported
 #### Minimal configuration
 ```
 terraform {
-  required_version = ">= 0.13"
+  required_version = ">= 1.4.0"
   required_providers {
     couchbase = {
-      version = "~> 0.0.5"
+      version = "~> 0.0.6"
       source  = "budisky.com/couchbase/couchbase"
     }
   }
@@ -90,10 +90,10 @@ provider "couchbase" {
 #### TLS Configuration
 ```
 terraform {
-  required_version = ">= 0.13"
+  required_version = ">= 1.4.0"
   required_providers {
     couchbase = {
-      version = "~> 0.0.5"
+      version = "~> 0.0.6"
       source  = "budisky.com/couchbase/couchbase"
     }
   }
@@ -115,10 +115,10 @@ provider "couchbase" {
 #### Example create new bucket
 ```
 terraform {
-  required_version = ">= 0.13"
+  required_version = ">= 1.4.0"
   required_providers {
     couchbase = {
-      version = "~> 0.0.5"
+      version = "~> 0.0.6"
       source  = "budisky.com/couchbase/couchbase"
     }
   }
