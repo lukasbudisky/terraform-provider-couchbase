@@ -124,6 +124,17 @@ func resourceBucket() *schema.Resource {
 				),
 				ValidateDiagFunc: validateDurabilityLevel(),
 			},
+			keyBucketStorageBackend: {
+				Type:     schema.TypeString,
+				Default:  gocb.StorageBackendCouchstore,
+				ForceNew: false,
+				Optional: true,
+				Description: fmt.Sprintf("Storage Backend:\n%s\n%s\n",
+					gocb.StorageBackendCouchstore,
+					gocb.StorageBackendMagma,
+				),
+				ValidateDiagFunc: validateStorageBackend(),
+			},
 		},
 	}
 }
@@ -140,7 +151,8 @@ func bucketSettings(
 	evictionPolicyType string,
 	compressionMode string,
 	conflictResolutionType string,
-	durabilityLevel int) *gocb.CreateBucketSettings {
+	durabilityLevel int,
+	storageBackend string) *gocb.CreateBucketSettings {
 
 	return &gocb.CreateBucketSettings{
 		BucketSettings: gocb.BucketSettings{
@@ -154,6 +166,7 @@ func bucketSettings(
 			MaxExpiry:              time.Duration(maxExpiry) * time.Second,
 			CompressionMode:        gocb.CompressionMode(compressionMode),
 			MinimumDurabilityLevel: gocb.DurabilityLevel(uint8(durabilityLevel)),
+			StorageBackend:         gocb.StorageBackend(storageBackend),
 		},
 		ConflictResolutionType: gocb.ConflictResolutionType(conflictResolutionType),
 	}
@@ -174,6 +187,7 @@ func createBucket(c context.Context, d *schema.ResourceData, m interface{}) diag
 		d.Get(keyBucketCompressionMode).(string),
 		d.Get(keyBucketConflictResolutionType).(string),
 		d.Get(keyBucketDurabilityLevel).(int),
+		d.Get(keyBucketStorageBackend).(string),
 	)
 
 	couchbase, diags := m.(*Connection).CouchbaseInitialization()
@@ -281,6 +295,10 @@ func readBucket(c context.Context, d *schema.ResourceData, m interface{}) diag.D
 		diags = append(diags, *diagForValueSet(keyBucketDurabilityLevel, bucket.MinimumDurabilityLevel, err))
 	}
 
+	if err := d.Set(keyBucketStorageBackend, bucket.StorageBackend); err != nil {
+		diags = append(diags, *diagForValueSet(keyBucketStorageBackend, bucket.StorageBackend, err))
+	}
+	
 	return diags
 }
 
@@ -319,6 +337,7 @@ func updateBucket(c context.Context, d *schema.ResourceData, m interface{}) diag
 			d.Get(keyBucketCompressionMode).(string),
 			d.Get(keyBucketConflictResolutionType).(string),
 			d.Get(keyBucketDurabilityLevel).(int),
+			d.Get(keyBucketStorageBackend).(string),
 		)
 
 		if err := couchbase.BucketManager.UpdateBucket(bs.BucketSettings, nil); err != nil {
