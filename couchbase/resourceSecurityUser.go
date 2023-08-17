@@ -8,7 +8,7 @@ import (
 
 	"github.com/couchbase/gocb/v2"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
@@ -27,14 +27,14 @@ func resourceSecurityUser() *schema.Resource {
 				Type:        schema.TypeString,
 				Required:    true,
 				ForceNew:    true,
-				Description: "User name",
+				Description: "Username",
 			},
 			keySecurityUserDisplayName: {
 				Type:        schema.TypeString,
 				Required:    false,
 				Optional:    true,
 				ForceNew:    false,
-				Description: "Full user name",
+				Description: "Full username",
 			},
 			keySecurityUserPassword: {
 				Type:        schema.TypeString,
@@ -115,15 +115,15 @@ func createSecurityUser(c context.Context, d *schema.ResourceData, m interface{}
 		return diag.FromErr(err)
 	}
 
-	if err := resource.RetryContext(c, time.Duration(securityUserTimeoutCreate)*time.Second, func() *resource.RetryError {
+	if err := retry.RetryContext(c, time.Duration(securityUserTimeoutCreate)*time.Second, func() *retry.RetryError {
 
 		_, err := couchbase.UserManager.GetUser(us.Username, nil)
 		if err != nil && errors.Is(err, gocb.ErrUserNotFound) {
-			return resource.RetryableError(err)
+			return retry.RetryableError(err)
 		}
 
 		if err != nil {
-			return resource.NonRetryableError(fmt.Errorf("can't create security user: %s error: %s", us.Username, err))
+			return retry.NonRetryableError(fmt.Errorf("can't create security user: %s error: %s", us.Username, err))
 		}
 
 		d.SetId(us.Username)

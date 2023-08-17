@@ -39,7 +39,7 @@ The following arguments are exported
 </ul>
 
 ## Example usage
-```
+```terraform
 resource "couchbase_query_index" "index_1" {
   name        = "index_1"
   bucket      = "bucket_1"
@@ -51,7 +51,7 @@ resource "couchbase_query_index" "index_1" {
 
 ## Import
 
-```
+```bash
 # Format:
 # terraform import couchbase_query_index.resource_name ID
 

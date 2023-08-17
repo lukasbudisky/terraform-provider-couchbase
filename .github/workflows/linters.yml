@@ -1,0 +1,25 @@
+---
+name: linters
+
+on:
+  workflow_call:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3.5.3
+        with:
+          fetch-depth: 0
+      - name: Lint Code Base
+        uses: super-linter/super-linter@v5.2.1
+        env:
+          VALIDATE_ALL_CODEBASE: true
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          JSCPD_CONFIG_FILE: .jscpd.json
+          VALIDATE_GO: false # temporary disabled because of bugs
+          VALIDATE_JSCPD: false # temporary disabled because of bugs

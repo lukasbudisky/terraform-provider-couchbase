@@ -1,10 +1,7 @@
 package main
 
 import (
-	"context"
 	"flag"
-	"fmt"
-	"log"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/plugin"
@@ -12,12 +9,6 @@ import (
 )
 
 func main() {
-	const (
-		hostname     = "budisky.com"
-		namespace    = "couchbase"
-		providerName = "couchbase"
-	)
-
 	var debugMode bool
 
 	flag.BoolVar(
@@ -31,19 +22,8 @@ func main() {
 
 	opts := &plugin.ServeOpts{ProviderFunc: func() *schema.Provider {
 		return couchbase.Provider()
-	}}
-
-	if debugMode {
-		provider := fmt.Sprintf("%s/%s/%s", hostname, namespace, providerName)
-
-		if err := plugin.Debug(
-			context.Background(),
-			provider,
-			opts); err != nil {
-
-			log.Fatal(err.Error())
-		}
-	}
+	}, Debug: debugMode}
 
 	plugin.Serve(opts)
+
 }

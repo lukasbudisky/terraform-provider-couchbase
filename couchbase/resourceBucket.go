@@ -8,7 +8,7 @@ import (
 
 	"github.com/couchbase/gocb/v2"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
@@ -200,15 +200,15 @@ func createBucket(c context.Context, d *schema.ResourceData, m interface{}) diag
 		return diag.FromErr(err)
 	}
 
-	if err := resource.RetryContext(c, time.Duration(bucketTimeoutCreate)*time.Second, func() *resource.RetryError {
+	if err := retry.RetryContext(c, time.Duration(bucketTimeoutCreate)*time.Second, func() *retry.RetryError {
 
 		_, err := couchbase.BucketManager.GetBucket(bs.Name, nil)
 		if err != nil && errors.Is(err, gocb.ErrBucketNotFound) {
-			return resource.RetryableError(err)
+			return retry.RetryableError(err)
 		}
 
 		if err != nil {
-			return resource.NonRetryableError(fmt.Errorf("can't create bucket: %s error: %s", bs.Name, err))
+			return retry.NonRetryableError(fmt.Errorf("can't create bucket: %s error: %s", bs.Name, err))
 		}
 
 		d.SetId(bs.Name)
@@ -298,7 +298,7 @@ func readBucket(c context.Context, d *schema.ResourceData, m interface{}) diag.D
 	if err := d.Set(keyBucketStorageBackend, bucket.StorageBackend); err != nil {
 		diags = append(diags, *diagForValueSet(keyBucketStorageBackend, bucket.StorageBackend, err))
 	}
-	
+
 	return diags
 }
 

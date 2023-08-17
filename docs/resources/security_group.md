@@ -48,7 +48,7 @@ The following arguments are exported
 </ul>
 
 ## Example usage
-```
+```terraform
 resource "couchbase_security_group" "user_group_1" {
   name        = "user_group_1"
   description = "user group"
@@ -69,7 +69,7 @@ resource "couchbase_security_group" "user_group_1" {
 
 ## Import
 
-```
+```terraform
 # Format:
 # terraform import couchbase_security_group.resource_name group_name
 

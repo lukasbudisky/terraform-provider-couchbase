@@ -4,7 +4,7 @@ import (
 	"context"
 	"crypto/x509"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"os"
 	"strings"
 	"time"
@@ -136,7 +136,7 @@ func certificateManagement(filePath string) (*x509.CertPool, diag.Diagnostics) {
 	}
 	defer file.Close()
 
-	data, err := ioutil.ReadAll(file)
+	data, err := io.ReadAll(file)
 	if err != nil {
 		return nil, diag.FromErr(err)
 	}

@@ -3,7 +3,7 @@ package couchbase
 import (
 	"crypto/x509"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"os"
 	"strings"
 
@@ -77,7 +77,7 @@ func validateTLSRootCert() schema.SchemaValidateDiagFunc {
 			}
 			defer file.Close()
 
-			data, err := ioutil.ReadAll(file)
+			data, err := io.ReadAll(file)
 			if err != nil {
 				return diag.FromErr(err)
 			}

@@ -39,7 +39,7 @@ The following arguments are supported
 </ul>
 
 **More information about client-to-node and node-to-node ports are in couchbase documentation**
-<a href=https://docs.couchbase.com/server/current/install/install-ports.html>Couchbase Ports Documentation</a>
+<https://docs.couchbase.com/server/current/install/install-ports.html>
 
 ### Optional
 <ul>
@@ -62,11 +62,11 @@ The following arguments are supported
 </ul>
 
 **More information about timeouts are in client settings couchbase documentation**
-<a href="https://docs.couchbase.com/ruby-sdk/current/ref/client-settings.html">Client Settings / Timeouts</a>
+<https://docs.couchbase.com/ruby-sdk/current/ref/client-settings.html>
 
 ## Example usage
-#### Minimal configuration
-```
+### Minimal configuration
+```terraform
 terraform {
   required_version = ">= 1.4.0"
   required_providers {
@@ -87,8 +87,8 @@ provider "couchbase" {
 }
 ```
 
-#### TLS Configuration
-```
+### TLS Configuration
+```terraform
 terraform {
   required_version = ">= 1.4.0"
   required_providers {
@@ -112,8 +112,8 @@ provider "couchbase" {
 }
 ```
 
-#### Example create new bucket
-```
+### Example create new bucket
+```terraform
 terraform {
   required_version = ">= 1.4.0"
   required_providers {

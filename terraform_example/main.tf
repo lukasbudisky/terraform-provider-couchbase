@@ -9,6 +9,11 @@ terraform {
       version = "~> 0.0.6"
       source  = "budisky.com/couchbase/couchbase"
     }
+
+    random = {
+      source  = "hashicorp/random"
+      version = "~> 3.5.1"
+    }
   }
 }
 

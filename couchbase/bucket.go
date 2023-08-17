@@ -4,7 +4,7 @@ import (
 	"crypto/tls"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 
 	"github.com/couchbase/gocb/v2"
@@ -48,7 +48,7 @@ func (cc *Connection) getBucketConflictResolutionType(bucketName string) (*gocb.
 	}
 	defer res.Body.Close()
 
-	resData, err := ioutil.ReadAll(res.Body)
+	resData, err := io.ReadAll(res.Body)
 	if err != nil {
 		return nil, err
 	}

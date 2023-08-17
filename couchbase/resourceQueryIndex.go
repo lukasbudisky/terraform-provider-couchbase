@@ -8,7 +8,7 @@ import (
 
 	"github.com/couchbase/gocb/v2"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
@@ -86,22 +86,22 @@ func createQueryIndex(c context.Context, d *schema.ResourceData, m interface{}) 
 		return diag.FromErr(err)
 	}
 
-	if err := resource.RetryContext(c, time.Duration(queryIndexTimeoutCreate)*time.Second, func() *resource.RetryError {
+	if err := retry.RetryContext(c, time.Duration(queryIndexTimeoutCreate)*time.Second, func() *retry.RetryError {
 
 		idx, err := couchbase.readQueryIndexByName(indexName, bucketName)
 		if err != nil {
-			return resource.RetryableError(err)
+			return retry.RetryableError(err)
 		}
 
 		if !idx.IsPrimary && idx.Name == indexName {
 			if idx.State != getDeferredState(deferred) {
-				return resource.RetryableError(fmt.Errorf("primary query index: %s bucket: %s creation in progress: %s", indexName, bucketName, idx.State))
+				return retry.RetryableError(fmt.Errorf("primary query index: %s bucket: %s creation in progress: %s", indexName, bucketName, idx.State))
 			}
 			d.SetId(idx.ID)
 			return nil
 		}
 
-		return resource.NonRetryableError(fmt.Errorf("query index doesn't exist index: %s bucket: %s", indexName, bucketName))
+		return retry.NonRetryableError(fmt.Errorf("query index doesn't exist index: %s bucket: %s", indexName, bucketName))
 	}); err != nil {
 		return diag.FromErr(err)
 	}
