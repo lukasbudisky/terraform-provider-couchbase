@@ -53,6 +53,11 @@ The following arguments are supported
       <li>nruEviction</li>
       <li>noEviction</li>
     </ul>
+  <li><b>storage_backend</b> (String) Storage backend type</li>
+    <ul>
+      <li>couchstore</li>
+      <li>magma</li>
+    </ul>
   <li><b>flush_enabled</b> (Boolean) Bucket flush enable/disable</li>
   <li><b>max_expire</b> (Int) Max expiry in seconds</li>
   <li><b>num_replicas</b> (Int) Number of bucket replicas</li>

@@ -14,13 +14,13 @@ steps:
   - name: linter
     image: golang:latest
     commands:
-      - apt-get update && apt-get install -yy python3 python3-pip shellcheck build-essential
-      - pip3 install yamllint
+      - apt-get update && apt-get install -y python3-pip shellcheck build-essential
+      - pip3 install yamllint --break-system-packages
       - go install "golang.org/x/lint/golint@latest"
       - make linters
 
   - name: run tests
-    image: golang
+    image: golang:latest
     commands:
       - make cbinit
       - make test
@@ -51,6 +51,6 @@ trigger:
 
 ---
 kind: signature
-hmac: 07bec2311957fd7a91b56a76c1855359d905efd4473a664132f99600331918bd
+hmac: 8cd1dce2ce3da844850c535abba88b84ad6317a3764897ea9096c76c2fd776c7
 
 ...
