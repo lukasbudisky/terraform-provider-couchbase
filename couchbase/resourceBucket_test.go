@@ -16,7 +16,7 @@ resource "couchbase_bucket_manager" "bucket" {
 const testAccBucketExtended = `
 resource "couchbase_bucket_manager" "bucket" {
 	name                     = "testAccPrimaryQueryIndex_extended_bucket_name"
-	ram_quota_mb             = 100
+	ram_quota_mb             = 1024
 	bucket_type			     = "membase"
 	compression_mode         = "passive"
 	conflict_resolution_type = "seqno"
@@ -26,7 +26,7 @@ resource "couchbase_bucket_manager" "bucket" {
 	max_expire               = 0
 	num_replicas             = 0
 	replica_index_disable    = true
- 	storage_backend		 = "magma"
+ 	storage_backend          = "magma"
 }
 `
 
@@ -49,7 +49,7 @@ func TestAccBucket(t *testing.T) {
 				Config: testAccBucketExtended,
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr("couchbase_bucket_manager.bucket", "name", "testAccPrimaryQueryIndex_extended_bucket_name"),
-					resource.TestCheckResourceAttr("couchbase_bucket_manager.bucket", "ram_quota_mb", "100"),
+					resource.TestCheckResourceAttr("couchbase_bucket_manager.bucket", "ram_quota_mb", "1024"),
 					resource.TestCheckResourceAttr("couchbase_bucket_manager.bucket", "bucket_type", "membase"),
 					resource.TestCheckResourceAttr("couchbase_bucket_manager.bucket", "compression_mode", "passive"),
 					resource.TestCheckResourceAttr("couchbase_bucket_manager.bucket", "conflict_resolution_type", "seqno"),
