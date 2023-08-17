@@ -1,5 +1,6 @@
 # Terraform provider for couchbase
-[![Build Status](https://drone.budisky.com/api/badges/lukasbudisky/terraform-provider-couchbase/status.svg)](https://drone.budisky.com/lukasbudisky/terraform-provider-couchbase)
+[![Build Status](https://github.com/lukasbudisky/terraform-provider-couchbase/actions/workflows/tests.yml/badge.svg)](https://github.com/lukasbudisky/terraform-provider-couchbase/actions/workflows/tests.yml)
+[![Release Status](https://github.com/lukasbudisky/terraform-provider-couchbase/actions/workflows/release.yml/badge.svg)](https://github.com/lukasbudisky/terraform-provider-couchbase/actions/workflows/release.yml)
 
 Terraform provider for Couchbase allow manage resources in couchbase cluster
 
