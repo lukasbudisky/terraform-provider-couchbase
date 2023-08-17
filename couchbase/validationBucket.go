@@ -181,3 +181,34 @@ func validateDurabilityLevel() schema.SchemaValidateDiagFunc {
 		return diags
 	}
 }
+
+// validateStorageBackend function verify bucket durability level
+// Allowed values:
+// - couchstore
+// - magma
+func validateStorageBackend() schema.SchemaValidateDiagFunc {
+        return func(i interface{}, c cty.Path) diag.Diagnostics {
+                var diags diag.Diagnostics
+
+                value, ok := i.(string)
+                if !ok {
+                        return diag.Errorf("value error: storage backend")
+                }
+
+                switch gocb.StorageBackend(value) {
+                case gocb.StorageBackendCouchstore,
+                        gocb.StorageBackendMagma:
+                        break
+                default:
+                        diags = append(diags, diag.Diagnostic{
+                                Severity: diag.Error,
+                                Summary:  fmt.Sprintf("Storage backend doesn't exist %s\n", i),
+                                Detail: fmt.Sprintf("Storage Backend must be:\n%s\n%s",
+                                       gocb.StorageBackendCouchstore,
+            					gocb.StorageBackendMagma, 
+                                ),
+                        })
+                }
+                return diags
+        }
+}

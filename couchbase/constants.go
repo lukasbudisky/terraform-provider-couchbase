@@ -27,6 +27,7 @@ const (
 	keyBucketCompressionMode        = "compression_mode"
 	keyBucketConflictResolutionType = "conflict_resolution_type"
 	keyBucketDurabilityLevel        = "durability_level"
+	keyBucketStorageBackend         = "storage_backend"
 
 	// Security group resource contants
 	keySecurityGroupName           = "name"

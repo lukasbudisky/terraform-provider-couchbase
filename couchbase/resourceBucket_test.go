@@ -26,6 +26,7 @@ resource "couchbase_bucket_manager" "bucket" {
 	max_expire               = 0
 	num_replicas             = 0
 	replica_index_disable    = true
+ 	storage_backend		 = "magma"
 }
 `
 
@@ -58,6 +59,7 @@ func TestAccBucket(t *testing.T) {
 					resource.TestCheckResourceAttr("couchbase_bucket_manager.bucket", "max_expire", "0"),
 					resource.TestCheckResourceAttr("couchbase_bucket_manager.bucket", "num_replicas", "0"),
 					resource.TestCheckResourceAttr("couchbase_bucket_manager.bucket", "replica_index_disable", "true"),
+					resource.TestCheckResourceAttr("couchbase_bucket_manager.bucket", "storage_backend", "magma"),
 				),
 			},
 		},
