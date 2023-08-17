@@ -1,0 +1,40 @@
+name: tests
+run-name: ${{ github.actor }} is testing terraform-provider-couchbase
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+  tags:
+      - 'v*'
+
+jobs:
+  Linter:
+    runs-on: golang:latest
+    steps:
+      - apt-get update && apt-get install -y python3-pip shellcheck build-essential
+      - pip3 install yamllint --break-system-packages
+      - go install "golang.org/x/lint/golint@latest"
+      - make linters
+  
+  Run_tests:
+    runs-on: golang:latest
+    env:
+      CB_ADDRESS: couchbase
+      CB_CLIENT_PORT: 8091
+      CB_NODE_PORT: 11210
+      CB_PASSWORD: 123456
+      CB_USERNAME: Administrator
+    steps:
+      - make cbinit
+      - make test
+      - make testacc
+    services:
+      couchbase:
+        image: couchbase
+        ports:
+          - 8091:8091
+          - 11210:11210
