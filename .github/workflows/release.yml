@@ -10,15 +10,15 @@ permissions:
   contents: write
 
 jobs:
+  linters:
+    uses: ./.github/workflows/linters.yml  
+  tests:
+    uses: ./.github/workflows/tests.yml
   goreleaser:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3.5.3
-      - name: Linters
-        uses: ./.github/workflows/linters.yml  
-      - name: Tests
-        uses: ./.github/workflows/tests.yml
       - name: Unshallow
         run: git fetch --prune --unshallow
       - name: Set up Go
