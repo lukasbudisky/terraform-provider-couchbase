@@ -8,7 +8,7 @@ import (
 
 	"github.com/couchbase/gocb/v2"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
@@ -95,15 +95,15 @@ func createSecurityGroup(c context.Context, d *schema.ResourceData, m interface{
 		return diag.FromErr(err)
 	}
 
-	if err := resource.RetryContext(c, time.Duration(securityGroupTimeoutCreate)*time.Second, func() *resource.RetryError {
+	if err := retry.RetryContext(c, time.Duration(securityGroupTimeoutCreate)*time.Second, func() *retry.RetryError {
 
 		_, err := couchbase.UserManager.GetGroup(gs.Name, nil)
 		if err != nil && errors.Is(err, gocb.ErrGroupNotFound) {
-			return resource.RetryableError(err)
+			return retry.RetryableError(err)
 		}
 
 		if err != nil {
-			return resource.NonRetryableError(fmt.Errorf("can't create security group: %s error: %s", gs.Name, err))
+			return retry.NonRetryableError(fmt.Errorf("can't create security group: %s error: %s", gs.Name, err))
 		}
 
 		d.SetId(gs.Name)

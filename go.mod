@@ -1,6 +1,6 @@
 module github.com/lukasbudisky/terraform-provider-couchbase
 
-go 1.21.0
+go 1.21
 
 require (
 	github.com/couchbase/gocb/v2 v2.6.3

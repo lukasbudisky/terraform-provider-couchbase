@@ -82,7 +82,7 @@ The following arguments are exported
 </ul>
 
 ## Example usage
-```
+```terraform
 resource "couchbase_bucket_manager" "bucket_1" {
   name                     = "bucket_1"
   ram_quota_mb             = 512
@@ -96,7 +96,7 @@ resource "couchbase_bucket_manager" "bucket_1" {
 
 ## Import
 
-```
+```bash
 # Format:
 # terraform import couchbase_bucket_manager.resource_name bucket_name
 

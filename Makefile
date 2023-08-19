@@ -45,7 +45,7 @@ test:
 
 testacc:
 	go clean -testcache
-	CB_ADDRESS=couchbase CB_CLIENT_PORT=8091 CB_NODE_PORT=11210 CB_USERNAME=Administrator CB_PASSWORD=123456 TF_ACC=1 go test -count=1 $(TEST) -v $(TESTARGS) -timeout 120m 
+	CB_ADDRESS=127.0.0.1 CB_CLIENT_PORT=8091 CB_NODE_PORT=11210 CB_USERNAME=Administrator CB_PASSWORD=123456 TF_ACC=1 go test -count=1 $(TEST) -v $(TESTARGS) -timeout 120m 
 
 ########################
 # Local infrastructure #
@@ -61,7 +61,7 @@ cbup:
 	docker-compose -f terraform_example/docker-compose.yml up -d --build
 
 cbinit:
-	./terraform_example/initialization.sh http://couchbase 8091
+	./terraform_example/initialization.sh http://127.0.0.1 8091
 
 cbdown:
 	docker-compose -f terraform_example/docker-compose.yml down

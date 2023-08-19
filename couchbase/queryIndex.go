@@ -64,8 +64,9 @@ func (cc *Configuration) readQueryIndexByID(id string) (*queryIndex, error) {
 		err := rows.Row(&index)
 		if err != nil {
 			return nil, err
+		} else {
+			break
 		}
-		break
 	}
 	defer rows.Close()
 	if index == nil {
@@ -91,8 +92,9 @@ func (cc *Configuration) readQueryIndexByName(indexName, bucketName string) (*qu
 		err := rows.Row(&index)
 		if err != nil {
 			return nil, err
+		} else {
+			break
 		}
-		break
 	}
 	defer rows.Close()
 	if index == nil {
@@ -158,7 +160,10 @@ func importQueryIndex(c context.Context, d *schema.ResourceData, m interface{}) 
 		return nil, err
 	}
 
-	d.Set(keyQueryIndexNumReplica, replica)
+	if err = d.Set(keyQueryIndexNumReplica, replica); err != nil {
+		return nil, err
+	}
+
 	d.SetId(id)
 
 	return []*schema.ResourceData{d}, nil
