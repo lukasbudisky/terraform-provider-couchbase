@@ -44,7 +44,9 @@ make cbnetdown
 
 > **WARNING**
 >
-> If you create multiple query indexes at once you can get internal server failure error because you > > can't create next index until previous is created.
+> If you create multiple query indexes at once you can
+> get internal server failure error because you can't
+> create next index until previous is created.
 > Add -parallelism=1 parameter during terraform apply
 >
 > Example:
