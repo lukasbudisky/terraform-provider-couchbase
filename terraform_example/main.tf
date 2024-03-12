@@ -6,7 +6,7 @@ terraform {
   required_version = ">= 1.4.0"
   required_providers {
     couchbase = {
-      version = "~> 0.0.6"
+      version = "~> 1.1.0"
       source  = "budisky.com/couchbase/couchbase"
     }
 
@@ -37,6 +37,23 @@ resource "couchbase_bucket_manager" "bucket_1" {
   conflict_resolution_type = "seqno"
   compression_mode         = "passive"
   num_replicas             = 0
+}
+
+################
+# Bucket scope #
+################
+resource "couchbase_bucket_scope" "scope_1" {
+  name   = "scope_1"
+  bucket = couchbase_bucket_manager.bucket_1.name
+}
+
+######################
+# Bucket collection #
+######################
+resource "couchbase_bucket_collection" "collection_1" {
+  name   = "collection_1"
+  scope  = couchbase_bucket_scope.scope_1.name
+  bucket = couchbase_bucket_manager.bucket_1.name
 }
 
 ###############
@@ -76,9 +93,9 @@ resource "couchbase_security_user" "user_1" {
   groups = [couchbase_security_group.user_group_1.id]
 }
 
-# ###########
-# # Indexes #
-# ###########
+###########
+# Indexes #
+###########
 resource "couchbase_primary_query_index" "primary_index_1" {
   name   = "primary_index_1"
   bucket = couchbase_bucket_manager.bucket_1.name
