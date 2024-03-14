@@ -20,11 +20,9 @@ resource "couchbase_bucket_manager" "bucket" {
 resource "couchbase_query_index" "query_index" {
 	name        = "testAccQueryIndex_extended_query_index_name"
 	bucket      = couchbase_bucket_manager.bucket.name
-
 	fields      = [
 		"` + "`" + "action" + "`" + `"
 	]
-
 	num_replica = 0
 	condition   = "(` + "`" + "type" + "`" + " " + `= \"http://example.com\")"
 }

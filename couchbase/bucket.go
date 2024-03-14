@@ -30,6 +30,7 @@ func (cc *Connection) getBucketConflictResolutionType(bucketName string) (*gocb.
 		Timeout: cc.ClusterOptions.TimeoutsConfig.ManagementTimeout,
 		Transport: &http.Transport{
 			TLSClientConfig: &tls.Config{
+				// nolint:gosec
 				InsecureSkipVerify: cc.ClusterOptions.SecurityConfig.TLSSkipVerify,
 				RootCAs:            cc.ClusterOptions.SecurityConfig.TLSRootCAs,
 			},

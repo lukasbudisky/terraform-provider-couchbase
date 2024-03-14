@@ -94,7 +94,7 @@ func createCollection(c context.Context, d *schema.ResourceData, m interface{}) 
 	return readCollection(c, d, m)
 }
 
-func readCollection(c context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func readCollection(_ context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	var diags diag.Diagnostics
 	names := strings.Split(d.Id(), "/")
 	if len(names) != 3 {
@@ -131,7 +131,7 @@ func readCollection(c context.Context, d *schema.ResourceData, m interface{}) di
 	return diags
 }
 
-func deleteCollection(c context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func deleteCollection(_ context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	var diags diag.Diagnostics
 
 	couchbase, diags := m.(*Connection).CouchbaseInitialization()

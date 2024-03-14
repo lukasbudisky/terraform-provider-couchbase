@@ -220,8 +220,9 @@ func createBucket(c context.Context, d *schema.ResourceData, m interface{}) diag
 	return readBucket(c, d, m)
 }
 
-func readBucket(c context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
-
+// nolint:gocyclo
+func readBucket(_ context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	var err error
 	bucketID := d.Id()
 
 	couchbase, diags := m.(*Connection).CouchbaseInitialization()
@@ -240,39 +241,39 @@ func readBucket(c context.Context, d *schema.ResourceData, m interface{}) diag.D
 		return diag.FromErr(err)
 	}
 
-	if err := d.Set(keyBucketName, bucket.Name); err != nil {
+	if err = d.Set(keyBucketName, bucket.Name); err != nil {
 		diags = append(diags, *diagForValueSet(keyBucketName, bucket.Name, err))
 	}
 
-	if err := d.Set(keyBucketFlushEnabled, bucket.FlushEnabled); err != nil {
+	if err = d.Set(keyBucketFlushEnabled, bucket.FlushEnabled); err != nil {
 		diags = append(diags, *diagForValueSet(keyBucketFlushEnabled, bucket.FlushEnabled, err))
 	}
 
-	if err := d.Set(keyBucketQuota, bucket.RAMQuotaMB); err != nil {
+	if err = d.Set(keyBucketQuota, bucket.RAMQuotaMB); err != nil {
 		diags = append(diags, *diagForValueSet(keyBucketQuota, bucket.RAMQuotaMB, err))
 	}
 
-	if err := d.Set(keyBucketIndexReplicas, bucket.ReplicaIndexDisabled); err != nil {
+	if err = d.Set(keyBucketIndexReplicas, bucket.ReplicaIndexDisabled); err != nil {
 		diags = append(diags, *diagForValueSet(keyBucketIndexReplicas, bucket.ReplicaIndexDisabled, err))
 	}
 
-	if err := d.Set(keyBucketMaxExpiry, int(time.Duration(bucket.MaxExpiry)/time.Second)); err != nil {
-		diags = append(diags, *diagForValueSet(keyBucketMaxExpiry, int(time.Duration(bucket.MaxExpiry)/time.Second), err))
+	if err = d.Set(keyBucketMaxExpiry, bucket.MaxExpiry/time.Second); err != nil {
+		diags = append(diags, *diagForValueSet(keyBucketMaxExpiry, bucket.MaxExpiry/time.Second, err))
 	}
 
-	if err := d.Set(keyBucketNumReplicas, bucket.NumReplicas); err != nil {
+	if err = d.Set(keyBucketNumReplicas, bucket.NumReplicas); err != nil {
 		diags = append(diags, *diagForValueSet(keyBucketNumReplicas, bucket.NumReplicas, err))
 	}
 
-	if err := d.Set(keyBucketBucketType, bucket.BucketType); err != nil {
+	if err = d.Set(keyBucketBucketType, bucket.BucketType); err != nil {
 		diags = append(diags, *diagForValueSet(keyBucketBucketType, bucket.BucketType, err))
 	}
 
-	if err := d.Set(keyBucketEvictionPolicyType, bucket.EvictionPolicy); err != nil {
+	if err = d.Set(keyBucketEvictionPolicyType, bucket.EvictionPolicy); err != nil {
 		diags = append(diags, *diagForValueSet(keyBucketEvictionPolicyType, bucket.EvictionPolicy, err))
 	}
 
-	if err := d.Set(keyBucketCompressionMode, bucket.CompressionMode); err != nil {
+	if err = d.Set(keyBucketCompressionMode, bucket.CompressionMode); err != nil {
 		diags = append(diags, *diagForValueSet(keyBucketCompressionMode, bucket.CompressionMode, err))
 	}
 
@@ -285,16 +286,16 @@ func readBucket(c context.Context, d *schema.ResourceData, m interface{}) diag.D
 			Detail: fmt.Sprintf("error details: %s\n", err),
 		})
 	} else {
-		if err := d.Set(keyBucketConflictResolutionType, crt); err != nil {
+		if err = d.Set(keyBucketConflictResolutionType, crt); err != nil {
 			diags = append(diags, *diagForValueSet(keyBucketConflictResolutionType, crt, err))
 		}
 	}
 
-	if err := d.Set(keyBucketDurabilityLevel, bucket.MinimumDurabilityLevel); err != nil {
+	if err = d.Set(keyBucketDurabilityLevel, bucket.MinimumDurabilityLevel); err != nil {
 		diags = append(diags, *diagForValueSet(keyBucketDurabilityLevel, bucket.MinimumDurabilityLevel, err))
 	}
 
-	if err := d.Set(keyBucketStorageBackend, bucket.StorageBackend); err != nil {
+	if err = d.Set(keyBucketStorageBackend, bucket.StorageBackend); err != nil {
 		diags = append(diags, *diagForValueSet(keyBucketStorageBackend, bucket.StorageBackend, err))
 	}
 
@@ -347,7 +348,7 @@ func updateBucket(c context.Context, d *schema.ResourceData, m interface{}) diag
 	return readBucket(c, d, m)
 }
 
-func deleteBucket(c context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func deleteBucket(_ context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 
 	bucketID := d.Id()
 
