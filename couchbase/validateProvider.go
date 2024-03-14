@@ -49,7 +49,6 @@ func validateAllowSaslMechanism() schema.SchemaValidateDiagFunc {
 				gocb.ScramSha1SaslMechanism,
 				gocb.ScramSha256SaslMechanism,
 				gocb.ScramSha512SaslMechanism:
-				break
 			default:
 				diags = append(diags, *getValidateAllowSaslMechanismDiagMessage(value))
 			}

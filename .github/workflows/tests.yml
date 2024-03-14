@@ -24,10 +24,9 @@ jobs:
       - name: Setup go
         uses: actions/setup-go@v5.0.0
         with:
-          go-version: "1.21.0"
+          go-version: "1.22.1"
       - name: Couchbase Initialization
         run: |
-          ls -als
           make cbinit
       - name: Couchbase Unit Tests
         run: |

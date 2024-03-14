@@ -9,10 +9,10 @@
 Terraform provider for Couchbase allow manage resources in couchbase cluster
 
 ## Requirements
-- terraform 1.4.0
-- go 1.21 (for plugin build)
-- docker-compose v2.15.1
-- docker desktop 4.17.0
+- terraform 1.7.4
+- go 1.22.1 (for plugin build)
+- docker-compose v2.24.6-desktop.1
+- docker desktop 4.28.0
 
 ## Run couchbase on localhost
 In terraform_example folder is docker-compose.yml with couchbase server.
@@ -60,7 +60,7 @@ terraform {
   required_version = ">= 1.4.0"
   required_providers {
     couchbase = {
-      version = "~> 0.0.6"
+      version = "~> 1.1.0"
       source  = "budisky.com/couchbase/couchbase"
     }
   }
@@ -83,7 +83,7 @@ terraform {
   required_version = ">= 1.4.0"
   required_providers {
     couchbase = {
-      version = "~> 0.0.6"
+      version = "~> 1.1.0"
       source  = "budisky.com/couchbase/couchbase"
     }
   }

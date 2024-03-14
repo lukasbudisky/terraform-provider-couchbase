@@ -58,9 +58,20 @@ const (
 	keyQueryIndexFields     = "fields"
 	keyQueryIndexCondition  = "condition"
 
+	// Scope resource constants
+	keyScopeName       = "name"
+	keyScopeBucketName = "bucket"
+
+	// Collection resource constants
+	keyCollectionName       = "name"
+	keyCollectionScopeName  = "scope"
+	keyCollectionBucketName = "bucket"
+
 	// Others
 	queryIndexTimeoutCreate    = 300
 	bucketTimeoutCreate        = 300
+	scopeTimeoutCreate         = 300
+	collectionTimeoutCreate    = 300
 	securityUserTimeoutCreate  = 300
 	securityGroupTimeoutCreate = 300
 )

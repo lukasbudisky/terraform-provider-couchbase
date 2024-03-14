@@ -224,8 +224,7 @@ func readBucket(c context.Context, d *schema.ResourceData, m interface{}) diag.D
 
 	bucketID := d.Id()
 
-	couchbaseConf := m.(*Connection)
-	couchbase, diags := couchbaseConf.CouchbaseInitialization()
+	couchbase, diags := m.(*Connection).CouchbaseInitialization()
 	if diags != nil {
 		return diags
 	}
@@ -277,7 +276,7 @@ func readBucket(c context.Context, d *schema.ResourceData, m interface{}) diag.D
 		diags = append(diags, *diagForValueSet(keyBucketCompressionMode, bucket.CompressionMode, err))
 	}
 
-	crt, err := couchbaseConf.getBucketConflictResolutionType(bucket.Name)
+	crt, err := m.(*Connection).getBucketConflictResolutionType(bucket.Name)
 	if err != nil {
 		diags = append(diags, diag.Diagnostic{
 			Severity: diag.Error,
