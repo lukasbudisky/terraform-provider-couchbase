@@ -109,7 +109,7 @@ func createQueryIndex(c context.Context, d *schema.ResourceData, m interface{}) 
 	return readQueryIndex(c, d, m)
 }
 
-func readQueryIndex(c context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func readQueryIndex(_ context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 
 	couchbase, diags := m.(*Connection).CouchbaseInitialization()
 	if diags != nil {
@@ -147,7 +147,7 @@ func readQueryIndex(c context.Context, d *schema.ResourceData, m interface{}) di
 	return diags
 }
 
-func deleteQueryIndex(c context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func deleteQueryIndex(_ context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 
 	couchbase, diags := m.(*Connection).CouchbaseInitialization()
 	if diags != nil {

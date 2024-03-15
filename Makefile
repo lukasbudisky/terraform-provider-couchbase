@@ -11,6 +11,16 @@ BINARY="terraform-provider-${NAME}_${VERSION}"
 OS_ARCH=linux_amd64
 CGO_ENABLED=0
 
+#########################
+# Linters configuration #
+#########################
+
+WORKSPACE="$(shell pwd)"
+GIT_BRANCH="$(shell git rev-parse --abbrev-ref HEAD)"
+LOG_LEVEL="INFO"
+
+#########################
+
 default: install
 
 build:
@@ -70,7 +80,13 @@ cbdown:
 # Linters #
 ###########
 
-linters:
-	find . -name "*.sh" | xargs shellcheck -s bash
-	yamllint -c .yamllint .
-	golint ./...
+lint:
+	docker run --rm --platform=linux/amd64 \
+		-e LOG_LEVEL=${LOG_LEVEL} \
+		-e VALIDATE_ALL_CODEBASE=true \
+		-e RUN_LOCAL=true \
+		-e DEFAULT_BRANCH=${GIT_BRANCH} \
+		-e VALIDATE_GO=false \
+		-v ${WORKSPACE}:/tmp/lint \
+		ghcr.io/super-linter/super-linter:latest
+

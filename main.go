@@ -20,6 +20,7 @@ func main() {
 
 	flag.Parse()
 
+	// nolint:gocritic
 	opts := &plugin.ServeOpts{ProviderFunc: func() *schema.Provider {
 		return couchbase.Provider()
 	}, Debug: debugMode}

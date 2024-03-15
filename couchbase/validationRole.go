@@ -12,7 +12,7 @@ import (
 // - scope
 // - collection
 func validateRoleParameter() schema.SchemaValidateDiagFunc {
-	return func(i interface{}, c cty.Path) diag.Diagnostics {
+	return func(i interface{}, _ cty.Path) diag.Diagnostics {
 		var diags diag.Diagnostics
 
 		value, ok := i.(string)

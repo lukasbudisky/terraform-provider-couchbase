@@ -35,7 +35,7 @@ func getValidateAllowSaslMechanismDiagMessage(value string) *diag.Diagnostic {
 // - SCRAM-SHA256
 // - SCRAM-SHA512
 func validateAllowSaslMechanism() schema.SchemaValidateDiagFunc {
-	return func(i interface{}, c cty.Path) diag.Diagnostics {
+	return func(i interface{}, _ cty.Path) diag.Diagnostics {
 		var diags diag.Diagnostics
 
 		rawSaslMechanism, ok := i.(string)
@@ -59,7 +59,7 @@ func validateAllowSaslMechanism() schema.SchemaValidateDiagFunc {
 
 // validateTLSRootCert function validate TLS root certificate
 func validateTLSRootCert() schema.SchemaValidateDiagFunc {
-	return func(i interface{}, c cty.Path) diag.Diagnostics {
+	return func(i interface{}, _ cty.Path) diag.Diagnostics {
 		var diags diag.Diagnostics
 
 		tlsRootCAs := *x509.NewCertPool()

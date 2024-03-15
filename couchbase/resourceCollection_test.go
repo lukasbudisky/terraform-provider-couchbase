@@ -6,7 +6,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 )
 
-const testAccCollection_basic = `
+const testAccCollectionBasic = `
 resource "couchbase_bucket_manager" "bucket" {
 	name         = "testAccCollection_basic_bucket"
 	ram_quota_mb = 100
@@ -30,7 +30,7 @@ func TestAccCollection(t *testing.T) {
 		Providers: testAccProviders,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccCollection_basic,
+				Config: testAccCollectionBasic,
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr("couchbase_bucket_collection.collection", "name", "testAccCollection_basic_bucket"),
 					resource.TestCheckResourceAttr("couchbase_bucket_collection.collection", "bucket", "testAccCollection_basic_bucket"),

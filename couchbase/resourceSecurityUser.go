@@ -135,7 +135,7 @@ func createSecurityUser(c context.Context, d *schema.ResourceData, m interface{}
 	return readSecurityUser(c, d, m)
 }
 
-func readSecurityUser(c context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func readSecurityUser(_ context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 
 	userID := d.Id()
 
@@ -215,7 +215,7 @@ func updateSecurityUser(c context.Context, d *schema.ResourceData, m interface{}
 	return readSecurityUser(c, d, m)
 }
 
-func deleteSecurityUser(c context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func deleteSecurityUser(_ context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 
 	userID := d.Id()
 

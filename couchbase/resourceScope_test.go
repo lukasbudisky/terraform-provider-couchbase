@@ -6,7 +6,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 )
 
-const testAccScope_basic = `
+const testAccScopeBasic = `
 resource "couchbase_bucket_manager" "bucket" {
 	name         = "testAccScope_basic_bucket"
 	ram_quota_mb = 100
@@ -24,7 +24,7 @@ func TestAccScope(t *testing.T) {
 		Providers: testAccProviders,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccScope_basic,
+				Config: testAccScopeBasic,
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr("couchbase_bucket_scope.scope", "name", "testAccScope_basic_scope"),
 					resource.TestCheckResourceAttr("couchbase_bucket_scope.scope", "bucket", "testAccScope_basic_bucket"),

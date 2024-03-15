@@ -14,7 +14,7 @@ import (
 // - memcached
 // - ephemeral
 func validateBucketType() schema.SchemaValidateDiagFunc {
-	return func(i interface{}, c cty.Path) diag.Diagnostics {
+	return func(i interface{}, _ cty.Path) diag.Diagnostics {
 		var diags diag.Diagnostics
 
 		value, ok := i.(string)
@@ -49,7 +49,7 @@ func validateBucketType() schema.SchemaValidateDiagFunc {
 // - nruEviction
 // - noEviction
 func validateEvictionPolicyType() schema.SchemaValidateDiagFunc {
-	return func(i interface{}, c cty.Path) diag.Diagnostics {
+	return func(i interface{}, _ cty.Path) diag.Diagnostics {
 		var diags diag.Diagnostics
 
 		value, ok := i.(string)
@@ -85,7 +85,7 @@ func validateEvictionPolicyType() schema.SchemaValidateDiagFunc {
 // - passive
 // - active
 func validateCompressionMode() schema.SchemaValidateDiagFunc {
-	return func(i interface{}, c cty.Path) diag.Diagnostics {
+	return func(i interface{}, _ cty.Path) diag.Diagnostics {
 		var diags diag.Diagnostics
 
 		value, ok := i.(string)
@@ -118,7 +118,7 @@ func validateCompressionMode() schema.SchemaValidateDiagFunc {
 // - lww
 // - seqno
 func validateConflictResolutionType() schema.SchemaValidateDiagFunc {
-	return func(i interface{}, c cty.Path) diag.Diagnostics {
+	return func(i interface{}, _ cty.Path) diag.Diagnostics {
 		var diags diag.Diagnostics
 
 		value, ok := i.(string)
@@ -151,7 +151,7 @@ func validateConflictResolutionType() schema.SchemaValidateDiagFunc {
 // - majorityAndPersistActive
 // - persistToMajority
 func validateDurabilityLevel() schema.SchemaValidateDiagFunc {
-	return func(i interface{}, c cty.Path) diag.Diagnostics {
+	return func(i interface{}, _ cty.Path) diag.Diagnostics {
 		var diags diag.Diagnostics
 
 		value, ok := i.(int)
@@ -187,28 +187,28 @@ func validateDurabilityLevel() schema.SchemaValidateDiagFunc {
 // - couchstore
 // - magma
 func validateStorageBackend() schema.SchemaValidateDiagFunc {
-        return func(i interface{}, c cty.Path) diag.Diagnostics {
-                var diags diag.Diagnostics
+	return func(i interface{}, _ cty.Path) diag.Diagnostics {
+		var diags diag.Diagnostics
 
-                value, ok := i.(string)
-                if !ok {
-                        return diag.Errorf("value error: storage backend")
-                }
+		value, ok := i.(string)
+		if !ok {
+			return diag.Errorf("value error: storage backend")
+		}
 
-                switch gocb.StorageBackend(value) {
-                case gocb.StorageBackendCouchstore,
-                        gocb.StorageBackendMagma:
-                        break
-                default:
-                        diags = append(diags, diag.Diagnostic{
-                                Severity: diag.Error,
-                                Summary:  fmt.Sprintf("Storage backend doesn't exist %s\n", i),
-                                Detail: fmt.Sprintf("Storage Backend must be:\n%s\n%s",
-                                       gocb.StorageBackendCouchstore,
-            					gocb.StorageBackendMagma, 
-                                ),
-                        })
-                }
-                return diags
-        }
+		switch gocb.StorageBackend(value) {
+		case gocb.StorageBackendCouchstore,
+			gocb.StorageBackendMagma:
+			break
+		default:
+			diags = append(diags, diag.Diagnostic{
+				Severity: diag.Error,
+				Summary:  fmt.Sprintf("Storage backend doesn't exist %s\n", i),
+				Detail: fmt.Sprintf("Storage Backend must be:\n%s\n%s",
+					gocb.StorageBackendCouchstore,
+					gocb.StorageBackendMagma,
+				),
+			})
+		}
+		return diags
+	}
 }

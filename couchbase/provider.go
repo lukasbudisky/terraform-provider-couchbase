@@ -151,7 +151,7 @@ func certificateManagement(filePath string) (*x509.CertPool, diag.Diagnostics) {
 	return &tlsRootCAs, nil
 }
 
-func providerConfigure(ctx context.Context, d *schema.ResourceData) (interface{}, diag.Diagnostics) {
+func providerConfigure(_ context.Context, d *schema.ResourceData) (interface{}, diag.Diagnostics) {
 	var (
 		tlsRootCAs *x509.CertPool
 		diags      diag.Diagnostics

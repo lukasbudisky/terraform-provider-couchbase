@@ -115,7 +115,7 @@ func createSecurityGroup(c context.Context, d *schema.ResourceData, m interface{
 	return readSecurityGroup(c, d, m)
 }
 
-func readSecurityGroup(c context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func readSecurityGroup(_ context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 
 	groupID := d.Id()
 
@@ -191,7 +191,7 @@ func updateSecurityGroup(c context.Context, d *schema.ResourceData, m interface{
 	return readSecurityGroup(c, d, m)
 }
 
-func deleteSecurityGroup(c context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func deleteSecurityGroup(_ context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 
 	groupID := d.Id()
 

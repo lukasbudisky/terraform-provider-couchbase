@@ -86,7 +86,7 @@ func createPrimaryQueryIndex(c context.Context, d *schema.ResourceData, m interf
 	return readPrimaryQueryIndex(c, d, m)
 }
 
-func readPrimaryQueryIndex(c context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func readPrimaryQueryIndex(_ context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 
 	couchbase, diags := m.(*Connection).CouchbaseInitialization()
 	if diags != nil {
@@ -118,7 +118,7 @@ func readPrimaryQueryIndex(c context.Context, d *schema.ResourceData, m interfac
 	return diags
 }
 
-func deletePrimaryQueryIndex(c context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func deletePrimaryQueryIndex(_ context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 
 	couchbase, diags := m.(*Connection).CouchbaseInitialization()
 	if diags != nil {
