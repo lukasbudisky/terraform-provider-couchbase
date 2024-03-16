@@ -19,12 +19,14 @@ WORKSPACE="$(shell pwd)"
 GIT_BRANCH="$(shell git rev-parse --abbrev-ref HEAD)"
 LOG_LEVEL="INFO"
 
-#########################
+##################
+# Build provider #
+##################
 
 default: install
 
 build:
-	go build -v -a -o ${BINARY}
+	GOOS=linux GOARCH=amd64 go build -v -a -o ${BINARY}
 
 release:
 	GOOS=darwin GOARCH=amd64 go build -v -a -o "./bin/${BINARY}_darwin_amd64_${VERSION}"
@@ -47,6 +49,10 @@ move:
 install: build
 	mkdir -p ~/.terraform.d/plugins/${HOSTNAME}/${NAMESPACE}/${NAME}/${VERSION}/${OS_ARCH}
 	mv ${BINARY} ~/.terraform.d/plugins/${HOSTNAME}/${NAMESPACE}/${NAME}/${VERSION}/${OS_ARCH}
+
+#################
+# Test provider #
+#################
 
 test:
 	go clean -testcache

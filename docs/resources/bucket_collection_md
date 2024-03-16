@@ -21,7 +21,11 @@ The following arguments are supported
 - **bucket** (String) Bucket name
 
 ### Optional
-No optional parameters
+<ul>
+  <li><b>id</b> (String) The ID of this resource</li>
+  <li><b>max_expire</b> (Int) Max expiry in seconds</li>
+  <li><b>history</b> (Boolean) Collection history enable/disable. Bucket must have "magma" storage mode. Always "False" when storage type is not "magma"</li>
+</ul>
 
 ## Attributes reference
 The following arguments are exported
@@ -30,14 +34,18 @@ The following arguments are exported
   <li><b>name</b> (String) Collection name</li>
   <li><b>scope</b> (String) Scope name</li>
   <li><b>bucket</b> (String) Bucket name</li>
+  <li><b>max_expire</b> (Int) Max expiry in seconds</li>
+  <li><b>history</b> (Boolean) Collection history enable/disable. Bucket must have "magma" storage mode. Always "False" when storage type is not "magma"</li>
 </ul>
 
 ## Example usage
 ```terraform
 resource "couchbase_bucket_collection" "collection_1" {
-  name   = "collection_1"
-  scope  = "scope_1"
-  bucket = "bucket_1"
+  name       = "collection_1"
+  scope      = "scope_1"
+  bucket     = "bucket_1"
+  max_expire = 20
+  history    = false
 }
 ```
 

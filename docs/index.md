@@ -68,7 +68,7 @@ The following arguments are supported
 ### Minimal configuration
 ```terraform
 terraform {
-  required_version = ">= 1.4.0"
+  required_version = ">= 1.7.4"
   required_providers {
     couchbase = {
       version = "~> 1.1.0"
@@ -90,7 +90,7 @@ provider "couchbase" {
 ### TLS Configuration
 ```terraform
 terraform {
-  required_version = ">= 1.4.0"
+  required_version = ">= 1.7.4"
   required_providers {
     couchbase = {
       version = "~> 1.1.0"
@@ -115,7 +115,7 @@ provider "couchbase" {
 ### Example create new bucket
 ```terraform
 terraform {
-  required_version = ">= 1.4.0"
+  required_version = ">= 1.7.4"
   required_providers {
     couchbase = {
       version = "~> 1.1.0"

@@ -8,23 +8,23 @@ import (
 
 const testAccQueryIndexExtended = `
 resource "couchbase_bucket_manager" "bucket" {
-	name                     = "testAccPrimaryQueryIndex_extended_bucket_name"
-	ram_quota_mb             = 100
-	flush_enabled            = false
-	max_expire               = 0
-	conflict_resolution_type = "seqno"
-	compression_mode         = "passive"
-	num_replicas             = 0
+    name                     = "testAccPrimaryQueryIndex_extended_bucket_name"
+    ram_quota_mb             = 100
+    flush_enabled            = false
+    max_expire               = 0
+    conflict_resolution_type = "seqno"
+    compression_mode         = "passive"
+    num_replicas             = 0
 }
 
 resource "couchbase_query_index" "query_index" {
-	name        = "testAccQueryIndex_extended_query_index_name"
-	bucket      = couchbase_bucket_manager.bucket.name
-	fields      = [
-		"` + "`" + "action" + "`" + `"
-	]
-	num_replica = 0
-	condition   = "(` + "`" + "type" + "`" + " " + `= \"http://example.com\")"
+    name        = "testAccQueryIndex_extended_query_index_name"
+    bucket      = couchbase_bucket_manager.bucket.name
+    fields      = [
+        "` + "`" + "action" + "`" + `"
+    ]
+    num_replica = 0
+    condition   = "(` + "`" + "type" + "`" + " " + `= \"http://example.com\")"
 }
 `
 

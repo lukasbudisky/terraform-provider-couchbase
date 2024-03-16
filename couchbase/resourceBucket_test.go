@@ -8,25 +8,25 @@ import (
 
 const testAccBucketBasic = `
 resource "couchbase_bucket_manager" "bucket" {
-	name                     = "testAccPrimaryQueryIndex_basic_bucket_name"
-	ram_quota_mb             = 100
+    name                     = "testAccBucket_basic_bucket_name"
+    ram_quota_mb             = 100
 }
 `
 
 const testAccBucketExtended = `
 resource "couchbase_bucket_manager" "bucket" {
-	name                     = "testAccPrimaryQueryIndex_extended_bucket_name"
-	ram_quota_mb             = 1024
-	bucket_type			     = "membase"
-	compression_mode         = "passive"
-	conflict_resolution_type = "seqno"
-	durability_level		 = 1
-	eviction_policy_type     = "valueOnly"
-	flush_enabled            = false
-	max_expire               = 0
-	num_replicas             = 0
-	replica_index_disable    = true
- 	storage_backend          = "magma"
+    name                     = "testAccBucket_extended_bucket_name"
+    ram_quota_mb             = 1024
+    bucket_type              = "membase"
+    compression_mode         = "passive"
+    conflict_resolution_type = "seqno"
+    durability_level         = 1
+    eviction_policy_type     = "valueOnly"
+    flush_enabled            = false
+    max_expire               = 0
+    num_replicas             = 0
+    replica_index_disable    = true
+    storage_backend          = "magma"
 }
 `
 
@@ -41,14 +41,14 @@ func TestAccBucket(t *testing.T) {
 			{
 				Config: testAccBucketBasic,
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("couchbase_bucket_manager.bucket", "name", "testAccPrimaryQueryIndex_basic_bucket_name"),
+					resource.TestCheckResourceAttr("couchbase_bucket_manager.bucket", "name", "testAccBucket_basic_bucket_name"),
 					resource.TestCheckResourceAttr("couchbase_bucket_manager.bucket", "ram_quota_mb", "100"),
 				),
 			},
 			{
 				Config: testAccBucketExtended,
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("couchbase_bucket_manager.bucket", "name", "testAccPrimaryQueryIndex_extended_bucket_name"),
+					resource.TestCheckResourceAttr("couchbase_bucket_manager.bucket", "name", "testAccBucket_extended_bucket_name"),
 					resource.TestCheckResourceAttr("couchbase_bucket_manager.bucket", "ram_quota_mb", "1024"),
 					resource.TestCheckResourceAttr("couchbase_bucket_manager.bucket", "bucket_type", "membase"),
 					resource.TestCheckResourceAttr("couchbase_bucket_manager.bucket", "compression_mode", "passive"),

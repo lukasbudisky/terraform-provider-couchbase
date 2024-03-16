@@ -3,7 +3,7 @@
 ############
 
 terraform {
-  required_version = ">= 1.4.0"
+  required_version = ">= 1.7.4"
   required_providers {
     couchbase = {
       version = "~> 1.1.0"
@@ -51,9 +51,10 @@ resource "couchbase_bucket_scope" "scope_1" {
 # Bucket collection #
 ######################
 resource "couchbase_bucket_collection" "collection_1" {
-  name   = "collection_1"
-  scope  = couchbase_bucket_scope.scope_1.name
-  bucket = couchbase_bucket_manager.bucket_1.name
+  name       = "collection_1"
+  scope      = couchbase_bucket_scope.scope_1.name
+  bucket     = couchbase_bucket_manager.bucket_1.name
+  max_expire = 20
 }
 
 ###############
