@@ -8,6 +8,9 @@ on:
 
 permissions:
   contents: write
+  actions: write
+  pull-requests: write
+  statuses: write
 
 jobs:
   linters:
