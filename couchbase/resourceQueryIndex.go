@@ -82,6 +82,11 @@ func createQueryIndex(c context.Context, d *schema.ResourceData, m interface{}) 
 		return diag.FromErr(err)
 	}
 
+	err = couchbase.Cluster.Bucket(bucketName).WaitUntilReady(time.Duration(queryIndexTimeoutCreate)*time.Second, &gocb.WaitUntilReadyOptions{DesiredState: gocb.ClusterStateOnline})
+	if err != nil {
+		return diag.FromErr(err)
+	}
+
 	if err := couchbase.createQueryIndex(indexName, bucketName, fields, condition, deferred, numReplica); err != nil {
 		return diag.FromErr(err)
 	}

@@ -47,6 +47,8 @@ make cbnetdown
 > If you create multiple query indexes at once you can
 > get internal server failure error because you can't
 > create next index until previous is created.
+>
+> Suggested solution is to reduce parallelism.
 > Add -parallelism=1 parameter during terraform apply
 >
 > Example:
@@ -57,7 +59,7 @@ make cbnetdown
 ### Base provider configuration
 ```terraform
 terraform {
-  required_version = ">= 1.4.0"
+  required_version = ">= 1.7.4"
   required_providers {
     couchbase = {
       version = "~> 1.1.0"
@@ -80,7 +82,7 @@ provider "couchbase" {
 ### TLS provider configuration
 ```terraform
 terraform {
-  required_version = ">= 1.4.0"
+  required_version = ">= 1.7.4"
   required_providers {
     couchbase = {
       version = "~> 1.1.0"

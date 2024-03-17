@@ -66,6 +66,8 @@ const (
 	keyCollectionName       = "name"
 	keyCollectionScopeName  = "scope"
 	keyCollectionBucketName = "bucket"
+	keyCollectionMaxExpiry  = "max_expire"
+	keyCollectionHistory    = "history"
 
 	// Others
 	queryIndexTimeoutCreate    = 300

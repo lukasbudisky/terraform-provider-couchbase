@@ -8,18 +8,18 @@ import (
 
 const testAccPrimaryQueryIndexBasic = `
 resource "couchbase_bucket_manager" "bucket" {
-	name                     = "testAccPrimaryQueryIndex_basic_bucket_name"
-	ram_quota_mb             = 100
-	flush_enabled            = false
-	max_expire               = 0
-	conflict_resolution_type = "seqno"
-	compression_mode         = "passive"
-	num_replicas             = 0
+    name                     = "testAccPrimaryQueryIndex_basic_bucket_name"
+    ram_quota_mb             = 100
+    flush_enabled            = false
+    max_expire               = 0
+    conflict_resolution_type = "seqno"
+    compression_mode         = "passive"
+    num_replicas             = 0
 }
 
 resource "couchbase_primary_query_index" "primary_index" {
-	name   = "testAccPrimaryQueryIndex_basic_primary_index_name"
-	bucket = couchbase_bucket_manager.bucket.name
+    name   = "testAccPrimaryQueryIndex_basic_primary_index_name"
+    bucket = couchbase_bucket_manager.bucket.name
 }
 `
 

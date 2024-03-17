@@ -20,7 +20,9 @@ The following arguments are supported
 - **bucket** (String) Bucket name
 
 ### Optional
-No optional parameters
+<ul>
+  <li><b>id</b> (String) The ID of this resource</li>
+</ul>
 
 ## Attributes reference
 The following arguments are exported

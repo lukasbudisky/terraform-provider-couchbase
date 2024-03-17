@@ -9,18 +9,9 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/retry"
 
-	"github.com/couchbase/gocb/v2"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
-
-type ErrScopeNotFound struct {
-	name string
-}
-
-func (e *ErrScopeNotFound) Error() string {
-	return fmt.Sprintf("cannot find scope with name: %s", e.name)
-}
 
 func resourceScope() *schema.Resource {
 	return &schema.Resource{
@@ -48,6 +39,16 @@ func resourceScope() *schema.Resource {
 	}
 }
 
+func scopeSettings(
+	name string,
+	bucket string,
+) *ScopeSettings {
+	return &ScopeSettings{
+		Name:   name,
+		Bucket: bucket,
+	}
+}
+
 func createScope(c context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	var diags diag.Diagnostics
 
@@ -57,28 +58,30 @@ func createScope(c context.Context, d *schema.ResourceData, m interface{}) diag.
 	}
 	defer couchbase.ConnectionCLose()
 
-	bucketName := d.Get(keyScopeBucketName).(string)
-	scopeName := d.Get(keyScopeName).(string)
+	ss := scopeSettings(
+		d.Get(keyScopeName).(string),
+		d.Get(keyScopeBucketName).(string),
+	)
 
-	collections := couchbase.Cluster.Bucket(bucketName).Collections()
+	cm := couchbase.Cluster.Bucket(ss.Bucket).CollectionsV2()
 
-	if err := collections.CreateScope(scopeName, nil); err != nil {
+	if err := cm.CreateScope(ss.Name, nil); err != nil {
 		return diag.FromErr(err)
 	}
 
 	if err := retry.RetryContext(c, time.Duration(scopeTimeoutCreate)*time.Second, func() *retry.RetryError {
 
 		target := &ErrScopeNotFound{}
-		_, err := findScope(collections, scopeName)
+		_, err := findScope(cm, ss.Name)
 		if errors.As(err, &target) {
 			return retry.RetryableError(target)
 		}
 
 		if err != nil {
-			return retry.NonRetryableError(fmt.Errorf("can't create scope: %s error: %s", scopeName, err))
+			return retry.NonRetryableError(fmt.Errorf("can't create scope: %s error: %s", ss.Name, err))
 		}
 
-		d.SetId(bucketName + "/" + scopeName)
+		d.SetId(ss.Bucket + "/" + ss.Name)
 		return nil
 	}); err != nil {
 		return diag.FromErr(err)
@@ -101,9 +104,9 @@ func deleteScope(_ context.Context, d *schema.ResourceData, m interface{}) diag.
 		return diag.Errorf("cannot delete scope due to malformed ID: %s", d.Id())
 	}
 
-	collections := couchbase.Cluster.Bucket(bucketName).Collections()
+	cm := couchbase.Cluster.Bucket(bucketName).CollectionsV2()
 
-	if err := collections.DropScope(scopeName, nil); err != nil {
+	if err := cm.DropScope(scopeName, nil); err != nil {
 		return diag.FromErr(err)
 	}
 
@@ -124,9 +127,9 @@ func readScope(_ context.Context, d *schema.ResourceData, m interface{}) diag.Di
 	}
 	defer couchbase.ConnectionCLose()
 
-	collections := couchbase.Cluster.Bucket(bucketName).Collections()
+	cm := couchbase.Cluster.Bucket(bucketName).CollectionsV2()
 
-	scope, err := findScope(collections, scopeName)
+	scope, err := findScope(cm, scopeName)
 	if err != nil {
 		d.SetId("")
 		return diag.FromErr(err)
@@ -140,19 +143,4 @@ func readScope(_ context.Context, d *schema.ResourceData, m interface{}) diag.Di
 	}
 
 	return diags
-}
-
-func findScope(cm *gocb.CollectionManager, name string) (*gocb.ScopeSpec, error) {
-	scopes, err := cm.GetAllScopes(nil)
-	if err != nil {
-		return nil, err
-	}
-
-	for _, scope := range scopes {
-		if scope.Name == name {
-			return &scope, nil
-		}
-	}
-
-	return nil, &ErrScopeNotFound{name: name}
 }

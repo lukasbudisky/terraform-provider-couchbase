@@ -13,14 +13,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-type ErrCollectionNotFound struct {
-	name string
-}
-
-func (e *ErrCollectionNotFound) Error() string {
-	return fmt.Sprintf("cannot find collection with name: %s", e.name)
-}
-
 func resourceCollection() *schema.Resource {
 	return &schema.Resource{
 		CreateContext: createCollection,
@@ -49,6 +41,39 @@ func resourceCollection() *schema.Resource {
 				ForceNew:    true,
 				Description: "Collection name",
 			},
+			keyCollectionMaxExpiry: {
+				Type:        schema.TypeInt,
+				Default:     10,
+				ForceNew:    true,
+				Optional:    true,
+				Description: "Max expiry in seconds",
+			},
+			keyCollectionHistory: {
+				Type:        schema.TypeBool,
+				Default:     false,
+				ForceNew:    true,
+				Optional:    true,
+				Description: "Collection history enable/disable. Bucket must have \"magma\" storage mode",
+			},
+		},
+	}
+}
+
+// collectionSettings return settings structure for collection resource
+func collectionSettings(
+	name string,
+	bucket string,
+	scope string,
+	maxExpiry int,
+	history *gocb.CollectionHistorySettings,
+) *CollectionSettings {
+	return &CollectionSettings{
+		Name:   name,
+		Bucket: bucket,
+		Scope:  scope,
+		Settings: &gocb.CreateCollectionSettings{
+			MaxExpiry: time.Duration(maxExpiry) * time.Second,
+			History:   history,
 		},
 	}
 }
@@ -56,36 +81,47 @@ func resourceCollection() *schema.Resource {
 func createCollection(c context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	var diags diag.Diagnostics
 
+	bucketName := d.Get(keyCollectionBucketName).(string)
+	historyInput := d.Get(keyCollectionHistory).(bool)
+
 	couchbase, diags := m.(*Connection).CouchbaseInitialization()
 	if diags != nil {
 		return diags
 	}
 	defer couchbase.ConnectionCLose()
 
-	bucketName := d.Get(keyCollectionBucketName).(string)
-	scopeName := d.Get(keyCollectionScopeName).(string)
-	collectionName := d.Get(keyCollectionName).(string)
+	history, err := couchbase.getCollectionHistorySettings(bucketName, historyInput)
+	if err != nil {
+		return diag.FromErr(err)
+	}
 
-	cm := couchbase.Cluster.Bucket(bucketName).Collections()
+	cs := collectionSettings(
+		d.Get(keyCollectionName).(string),
+		bucketName,
+		d.Get(keyCollectionScopeName).(string),
+		d.Get(keyCollectionMaxExpiry).(int),
+		history,
+	)
 
-	collectionSpec := gocb.CollectionSpec{Name: collectionName, ScopeName: scopeName}
-	if err := cm.CreateCollection(collectionSpec, nil); err != nil {
+	cm := couchbase.Cluster.Bucket(cs.Bucket).CollectionsV2()
+
+	if err := cm.CreateCollection(cs.Scope, cs.Name, cs.Settings, nil); err != nil {
 		return diag.FromErr(err)
 	}
 
 	if err := retry.RetryContext(c, time.Duration(collectionTimeoutCreate)*time.Second, func() *retry.RetryError {
 
 		target := &ErrCollectionNotFound{}
-		_, err := findCollection(cm, collectionName, scopeName)
+		_, err := findCollection(cm, cs.Name, cs.Scope)
 		if errors.As(err, &target) {
 			return retry.RetryableError(target)
 		}
 
 		if err != nil {
-			return retry.NonRetryableError(fmt.Errorf("can't create collection: %s error: %s", collectionName, err))
+			return retry.NonRetryableError(fmt.Errorf("can't create collection: %s error: %s", cs.Name, err))
 		}
 
-		d.SetId(bucketName + "/" + scopeName + "/" + collectionName)
+		d.SetId(cs.Bucket + "/" + cs.Scope + "/" + cs.Name)
 		return nil
 	}); err != nil {
 		return diag.FromErr(err)
@@ -100,6 +136,7 @@ func readCollection(_ context.Context, d *schema.ResourceData, m interface{}) di
 	if len(names) != 3 {
 		return diag.Errorf("malformed id for collection: %s", d.Id())
 	}
+
 	bucketName := names[0]
 	scopeName := names[1]
 	collectionName := names[2]
@@ -110,7 +147,7 @@ func readCollection(_ context.Context, d *schema.ResourceData, m interface{}) di
 	}
 	defer couchbase.ConnectionCLose()
 
-	cm := couchbase.Cluster.Bucket(bucketName).Collections()
+	cm := couchbase.Cluster.Bucket(bucketName).CollectionsV2()
 
 	collection, err := findCollection(cm, collectionName, scopeName)
 	if err != nil {
@@ -145,27 +182,11 @@ func deleteCollection(_ context.Context, d *schema.ResourceData, m interface{}) 
 	scopeName := names[1]
 	collectionName := names[2]
 
-	cm := couchbase.Cluster.Bucket(bucketName).Collections()
+	cm := couchbase.Cluster.Bucket(bucketName).CollectionsV2()
 
-	collectionSpec := gocb.CollectionSpec{Name: collectionName, ScopeName: scopeName}
-	if err := cm.DropCollection(collectionSpec, nil); err != nil {
+	if err := cm.DropCollection(scopeName, collectionName, nil); err != nil {
 		return diag.FromErr(err)
 	}
 
 	return diags
-}
-
-func findCollection(cm *gocb.CollectionManager, name string, scopeName string) (*gocb.CollectionSpec, error) {
-	scope, err := findScope(cm, scopeName)
-	if err != nil {
-		return nil, err
-	}
-
-	for _, collection := range scope.Collections {
-		if collection.Name == name {
-			return &collection, nil
-		}
-	}
-
-	return nil, &ErrCollectionNotFound{name: name}
 }

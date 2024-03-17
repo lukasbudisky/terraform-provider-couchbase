@@ -8,13 +8,13 @@ import (
 
 const testAccScopeBasic = `
 resource "couchbase_bucket_manager" "bucket" {
-	name         = "testAccScope_basic_bucket"
-	ram_quota_mb = 100
+    name         = "testAccScope_basic_bucket"
+    ram_quota_mb = 100
 }
 
 resource "couchbase_bucket_scope" "scope" {
-	name   = "testAccScope_basic_scope"
-	bucket = couchbase_bucket_manager.bucket.name
+    name   = "testAccScope_basic_scope"
+    bucket = couchbase_bucket_manager.bucket.name
 }
 `
 

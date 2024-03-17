@@ -103,13 +103,13 @@ func (cc *Configuration) readQueryIndexByName(indexName, bucketName string) (*qu
 	defer rows.Close()
 
 	if index == nil {
-		return nil, fmt.Errorf("index not found index: %s bucket:%s; %w", indexName, bucketName, gocb.ErrIndexNotFound)
+		return nil, fmt.Errorf("index not found index: %s bucket: %s; %w", indexName, bucketName, gocb.ErrIndexNotFound)
 	}
 
 	return index, nil
 }
 
-// createPrimaryQueryIndex custom functon which support primary query index creation with deferred state, number of replicas
+// createPrimaryQueryIndex custom function which support primary query index creation with deferred state, number of replicas
 func (cc *Configuration) createPrimaryQueryIndex(indexName, bucketName string, deferred bool, numReplica int) error {
 	q := fmt.Sprintf("CREATE PRIMARY INDEX `%s` ON `%s` WITH {\"defer_build\":%t, \"num_replica\":%d}", indexName, bucketName, deferred, numReplica)
 	rows, err := cc.Cluster.Query(q, nil)
@@ -121,7 +121,7 @@ func (cc *Configuration) createPrimaryQueryIndex(indexName, bucketName string, d
 	return nil
 }
 
-// createQueryIndex custom functon which support query index creation with fields parameters and conditions, deferred state, number of replicas
+// createQueryIndex custom function which support query index creation with fields parameters and conditions, deferred state, number of replicas
 func (cc *Configuration) createQueryIndex(indexName, bucketName string, fields []string, condition string, deferred bool, numReplica int) error {
 	if len(fields) == 0 {
 		return fmt.Errorf("you must specify at least one field to index")
