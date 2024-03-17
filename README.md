@@ -62,8 +62,8 @@ terraform {
   required_version = ">= 1.7.4"
   required_providers {
     couchbase = {
-      version = "~> 1.1.0"
-      source  = "budisky.com/couchbase/couchbase"
+      version = "~> 1.1.1"
+      source  = "lukasbudisky/couchbase"
     }
   }
 }
@@ -85,8 +85,8 @@ terraform {
   required_version = ">= 1.7.4"
   required_providers {
     couchbase = {
-      version = "~> 1.1.0"
-      source  = "budisky.com/couchbase/couchbase"
+      version = "~> 1.1.1"
+      source  = "lukasbudisky/couchbase"
     }
   }
 }
