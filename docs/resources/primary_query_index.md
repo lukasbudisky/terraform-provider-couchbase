@@ -8,7 +8,7 @@ description: |-
 
 # couchbase_primary_query_index
 
-The `couchbase_primary_query_index` manage primary query indexes in couchbase
+The `couchbase_primary_query_index` manage primary query index in couchbase
 
 
 ## Argument reference
