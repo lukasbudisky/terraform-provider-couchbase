@@ -8,7 +8,7 @@ description: |-
 
 # couchbase_query_index
 
-The `couchbase_query_index` manage query indexes in couchbase
+The `couchbase_query_index` manage query index in couchbase
 
 
 ## Argument reference

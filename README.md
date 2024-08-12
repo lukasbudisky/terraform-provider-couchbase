@@ -44,7 +44,7 @@ make cbnetdown
 
 > **WARNING**
 >
-> If you create multiple query indexes at once you can
+> If you create multiple query index at once you can
 > get internal server failure error because you can't
 > create next index until previous is created.
 >
@@ -109,8 +109,8 @@ We currently manage these operations via terraform resources
 - buckets: ```couchbase_bucket_manager```
 - groups: ```couchbase_security_group```
 - users: ```couchbase_security_user```
-- primary: query indexes ```couchbase_primary_query_index```
-- query indexes: ```couchbase_query_index```
+- primary: query index ```couchbase_primary_query_index```
+- query index: ```couchbase_query_index```
 
 ## Developing provider
 Provider tests
