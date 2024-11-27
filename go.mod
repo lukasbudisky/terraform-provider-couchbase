@@ -3,7 +3,7 @@ module github.com/lukasbudisky/terraform-provider-couchbase
 go 1.22.1
 
 require (
-	github.com/couchbase/gocb/v2 v2.9.2
+	github.com/couchbase/gocb/v2 v2.9.3
 	github.com/hashicorp/go-cty v1.4.1-0.20200414143053-d3edf31b6320
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.35.0
 )
@@ -13,7 +13,7 @@ require (
 	github.com/agext/levenshtein v1.2.3 // indirect
 	github.com/apparentlymart/go-textseg/v15 v15.0.0 // indirect
 	github.com/cloudflare/circl v1.3.7 // indirect
-	github.com/couchbase/gocbcore/v10 v10.5.2 // indirect
+	github.com/couchbase/gocbcore/v10 v10.5.3 // indirect
 	github.com/couchbase/gocbcoreps v0.1.3 // indirect
 	github.com/couchbase/goprotostellar v1.0.2 // indirect
 	github.com/couchbaselabs/gocbconnstr/v2 v2.0.0-20240607131231-fb385523de28 // indirect
