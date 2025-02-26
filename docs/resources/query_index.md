@@ -10,10 +10,10 @@ description: |-
 
 The `couchbase_query_index` manage query index in couchbase
 
-
 ## Argument reference
 
 The following arguments are supported
+
 ### Required
 
 - **name** (String) Query index name
@@ -21,6 +21,7 @@ The following arguments are supported
 - **fields** (List of String) Query index fields - This parameter should include also backticks
 
 ### Optional
+
 <ul>
   <li><b>id</b> (String) The ID of this resource</li>
   <li><b>num_replica</b> (Int) Number of query index replicas</li>
@@ -28,7 +29,9 @@ The following arguments are supported
 </ul>
 
 ## Attributes reference
+
 The following arguments are exported
+
 <ul>
   <li><b>id</b> (String) The ID of this resource</li>
   <li><b>name</b> (String) Query index name</li>
@@ -39,6 +42,7 @@ The following arguments are exported
 </ul>
 
 ## Example usage
+
 ```terraform
 resource "couchbase_query_index" "index_1" {
   name        = "index_1"

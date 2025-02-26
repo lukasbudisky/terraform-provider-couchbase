@@ -10,10 +10,10 @@ description: |-
 
 The `couchbase_bucket_collection` manage bucket collections in couchbase
 
-
 ## Argument reference
 
 The following arguments are supported
+
 ### Required
 
 - **name** (String) Collection name
@@ -21,6 +21,7 @@ The following arguments are supported
 - **bucket** (String) Bucket name
 
 ### Optional
+
 <ul>
   <li><b>id</b> (String) The ID of this resource</li>
   <li><b>max_expire</b> (Int) Max expiry in seconds</li>
@@ -28,7 +29,9 @@ The following arguments are supported
 </ul>
 
 ## Attributes reference
+
 The following arguments are exported
+
 <ul>
   <li><b>id</b> (String) The ID of this resource</li>
   <li><b>name</b> (String) Collection name</li>
@@ -39,6 +42,7 @@ The following arguments are exported
 </ul>
 
 ## Example usage
+
 ```terraform
 resource "couchbase_bucket_collection" "collection_1" {
   name       = "collection_1"
@@ -58,4 +62,3 @@ resource "couchbase_bucket_collection" "collection_1" {
 # Import command:
 terraform import couchbase_bucket_collection.collection_1 bucket_1/scope_1/collection_1
 ```
-

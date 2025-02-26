@@ -3,16 +3,16 @@
 ############
 
 terraform {
-  required_version = ">= 1.7.4"
+  required_version = ">= 1.10.5"
   required_providers {
     couchbase = {
-      version = "~> 1.1.1"
+      version = "~> 1.1.3"
       source  = "budisky.com/couchbase/couchbase"
     }
 
     random = {
       source  = "hashicorp/random"
-      version = "~> 3.5.1"
+      version = "~> 3.7.1"
     }
   }
 }
