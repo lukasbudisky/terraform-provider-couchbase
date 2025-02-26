@@ -10,15 +10,16 @@ description: |-
 
 The `couchbase_security_group` manage groups in couchbase
 
-
 ## Argument reference
 
 The following arguments are supported
+
 ### Required
 
 - **name** (String) Group name
 
 ### Optional
+
 <ul>
   <li><b>id</b> (String) The ID of this resource</li>
   <li><b>description</b>  (String) Group description</li>
@@ -39,7 +40,9 @@ The following arguments are supported
 </ul>
 
 ## Attributes reference
+
 The following arguments are exported
+
 <ul>
   <li><b>id</b> (String) The ID of this resource</li>
   <li><b>name</b> (String) Group name</li>
@@ -48,6 +51,7 @@ The following arguments are exported
 </ul>
 
 ## Example usage
+
 ```terraform
 resource "couchbase_security_group" "user_group_1" {
   name        = "user_group_1"
@@ -76,4 +80,3 @@ resource "couchbase_security_group" "user_group_1" {
 # Import command:
 terraform import couchbase_security_group.user_group_1 user_group_1
 ```
-

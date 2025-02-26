@@ -10,22 +10,25 @@ description: |-
 
 The `couchbase_bucket_scope` manage bucket scopes in couchbase
 
-
 ## Argument reference
 
 The following arguments are supported
+
 ### Required
 
 - **name** (String) Scope name
 - **bucket** (String) Bucket name
 
 ### Optional
+
 <ul>
   <li><b>id</b> (String) The ID of this resource</li>
 </ul>
 
 ## Attributes reference
+
 The following arguments are exported
+
 <ul>
   <li><b>id</b> (String) The ID of this resource</li>
   <li><b>name</b> (String) Scope name</li>
@@ -33,6 +36,7 @@ The following arguments are exported
 </ul>
 
 ## Example usage
+
 ```terraform
 resource "couchbase_bucket_scope" "scope_1" {
   name   = "scope_1"
@@ -49,4 +53,3 @@ resource "couchbase_bucket_scope" "scope_1" {
 # Import command:
 terraform import couchbase_bucket_scope.scope_1 bucket_1/scope_1
 ```
-

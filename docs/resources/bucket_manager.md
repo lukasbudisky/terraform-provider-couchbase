@@ -10,16 +10,17 @@ description: |-
 
 The `couchbase_bucket_manager` manage buckets in couchbase
 
-
 ## Argument reference
 
 The following arguments are supported
+
 ### Required
 
 - **name** (String) Bucket name
 - **ram_quota_mb** (Number) Ram quota for bucket
 
 ### Optional
+
 <ul>
   <li><b>id</b> (String) The ID of this resource</li>
   <li><b>bucket_type</b> (String) Bucket type</li>
@@ -65,7 +66,9 @@ The following arguments are supported
 </ul>
 
 ## Attributes reference
+
 The following arguments are exported
+
 <ul>
   <li><b>id</b> (String) The ID of this resource</li>
   <li><b>bucket_name</b> (String) Bucket name</li>
@@ -82,6 +85,7 @@ The following arguments are exported
 </ul>
 
 ## Example usage
+
 ```terraform
 resource "couchbase_bucket_manager" "bucket_1" {
   name                     = "bucket_1"
@@ -103,4 +107,3 @@ resource "couchbase_bucket_manager" "bucket_1" {
 # Import command:
 terraform import couchbase_bucket_manager.bucket_1 bucket_1
 ```
-

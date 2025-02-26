@@ -10,16 +10,17 @@ description: |-
 
 The `couchbase_security_user` manage users in couchbase
 
-
 ## Argument reference
 
 The following arguments are supported
+
 ### Required
 
 - **username** (String) Username
 - **password** (String, Sensitive) Password
 
 ### Optional
+
 <ul>
   <li><b>id</b> (String) The ID of this resource</li>
   <li><b>display_name</b>  (String) Full username</li>
@@ -40,7 +41,9 @@ The following arguments are supported
 </ul>
 
 ## Attributes reference
+
 The following arguments are exported
+
 <ul>
   <li><b>id</b> (String) The ID of this resource</li>
   <li><b>username</b> (String) Username</li>
@@ -51,6 +54,7 @@ The following arguments are exported
 </ul>
 
 ## Example usage
+
 ```terraform
 resource "random_password" "user_password" {
   length  = 10
@@ -84,15 +88,16 @@ resource "couchbase_security_user" "user_1" {
 > **WARNING**
 > If you want import existing user with existing password configure parameter "password" to empty string. There will be no diff during terraform plan.
 >
->For Example:
->```terraform
->"couchbase_security_user"">resource "couchbase_security_user" "user_1" {
+> For Example:
+>
+> ```terraform
+> "couchbase_security_user"">resource "couchbase_security_user" "user_1" {
 >  username = "user_1"
 >  password = ""
 >
 >  groups = [couchbase_security_group.user_group_1.id]
->}
->```
+> }
+> ```
 
 ```bash
 # Format:
@@ -101,4 +106,3 @@ resource "couchbase_security_user" "user_1" {
 # Import command:
 terraform import couchbase_security_user.user_1 user_1
 ```
-

@@ -6,7 +6,7 @@ TEST?=$$(go list ./... | grep -v 'vendor')
 HOSTNAME=budisky.com
 NAMESPACE=couchbase
 NAME=couchbase
-VERSION=1.1.1
+VERSION=1.1.3
 BINARY="terraform-provider-${NAME}_${VERSION}"
 OS_ARCH=linux_amd64
 CGO_ENABLED=0
@@ -74,13 +74,13 @@ cbnetdown:
 	docker network rm couchbase
 
 cbup:
-	docker-compose -f terraform_example/docker-compose.yml up -d --build
+	docker compose -f terraform_example/docker-compose.yml up -d --build
 
 cbinit:
 	./terraform_example/initialization.sh http://127.0.0.1 8091
 
 cbdown:
-	docker-compose -f terraform_example/docker-compose.yml down
+	docker compose -f terraform_example/docker-compose.yml down
 
 ###########
 # Linters #

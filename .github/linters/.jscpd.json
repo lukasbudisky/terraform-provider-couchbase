@@ -1,4 +1,4 @@
 {
-    "threshold": 20.0,
-    "absolute": true
+  "threshold": 20,
+  "absolute": true
 }

@@ -13,6 +13,6 @@ permissions:
 
 jobs:
   linters:
-    uses: ./.github/workflows/linters.yml  
+    uses: ./.github/workflows/linters.yml
   tests:
     uses: ./.github/workflows/tests.yml

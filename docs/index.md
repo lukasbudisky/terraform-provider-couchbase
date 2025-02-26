@@ -13,6 +13,7 @@ The terraform couchbase provider `terraform-provider-couchbase` for management r
 ## Argument reference
 
 The following arguments are supported
+
 ### Required
 
 <ul>
@@ -42,6 +43,7 @@ The following arguments are supported
 <https://docs.couchbase.com/server/current/install/install-ports.html>
 
 ### Optional
+
 <ul>
   <li><b>management_timeout</b> (String) Couchase management timeout. Read more about couchbase timeouts in documentation</li>
   <ul>
@@ -65,13 +67,15 @@ The following arguments are supported
 <https://docs.couchbase.com/ruby-sdk/current/ref/client-settings.html>
 
 ## Example usage
+
 ### Minimal configuration
+
 ```terraform
 terraform {
-  required_version = ">= 1.7.4"
+  required_version = ">= 1.10.5"
   required_providers {
     couchbase = {
-      version = "~> 1.1.1"
+      version = "~> 1.1.3"
       source  = "lukasbudisky/couchbase"
     }
   }
@@ -88,12 +92,13 @@ provider "couchbase" {
 ```
 
 ### TLS Configuration
+
 ```terraform
 terraform {
-  required_version = ">= 1.7.4"
+  required_version = ">= 1.10.5"
   required_providers {
     couchbase = {
-      version = "~> 1.1.1"
+      version = "~> 1.1.3"
       source  = "lukasbudisky/couchbase"
     }
   }
@@ -113,12 +118,13 @@ provider "couchbase" {
 ```
 
 ### Example create new bucket
+
 ```terraform
 terraform {
-  required_version = ">= 1.7.4"
+  required_version = ">= 1.10.5"
   required_providers {
     couchbase = {
-      version = "~> 1.1.1"
+      version = "~> 1.1.3"
       source  = "lukasbudisky/couchbase"
     }
   }
