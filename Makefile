@@ -91,8 +91,8 @@ lint:
 		-e LOG_LEVEL=${LOG_LEVEL} \
 		-e VALIDATE_ALL_CODEBASE=true \
 		-e RUN_LOCAL=true \
+		-e SHELL=/bin/bash \
 		-e DEFAULT_BRANCH=${GIT_BRANCH} \
 		-e VALIDATE_GO=false \
 		-v ${WORKSPACE}:/tmp/lint \
 		ghcr.io/super-linter/super-linter:latest
-
