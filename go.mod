@@ -5,7 +5,7 @@ go 1.24.0
 require (
 	github.com/couchbase/gocb/v2 v2.11.1
 	github.com/hashicorp/go-cty v1.5.0
-	github.com/hashicorp/terraform-plugin-sdk/v2 v2.38.0
+	github.com/hashicorp/terraform-plugin-sdk/v2 v2.38.1
 )
 
 require (
