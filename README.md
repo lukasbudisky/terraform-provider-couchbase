@@ -1,5 +1,6 @@
 # Terraform provider for couchbase
 
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/lukasbudisky/terraform-provider-couchbase)
 ![GitHub release (with filter)](https://img.shields.io/github/v/release/lukasbudisky/terraform-provider-couchbase?style=flat-square&logo=terraform&logoColor=blue&label=latest%20version&labelColor=grey&link=https%3A%2F%2Fregistry.terraform.io%2Fproviders%2Flukasbudisky%2Fcouchbase%2Flatest&link=https%3A%2F%2Fregistry.terraform.io%2Fproviders%2Flukasbudisky%2Fcouchbase%2Flatest)
 ![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/lukasbudisky/terraform-provider-couchbase/.github%2Fworkflows%2Fmain_branch.yml?style=flat-square&logo=github&logoColor=white&label=tests&labelColor=grey&link=https%3A%2F%2Fgithub.com%2Flukasbudisky%2Fterraform-provider-couchbase%2Freleases&link=https%3A%2F%2Fgithub.com%2Flukasbudisky%2Fterraform-provider-couchbase%2Freleases)
 ![GitHub all releases](https://img.shields.io/github/downloads/lukasbudisky/terraform-provider-couchbase/total?style=flat-square&logo=terraform&logoColor=blue&labelColor=grey&color=yellow&link=https%3A%2F%2Fregistry.terraform.io%2Fproviders%2Flukasbudisky%2Fcouchbase%2Flatest&link=https%3A%2F%2Fregistry.terraform.io%2Fproviders%2Flukasbudisky%2Fcouchbase%2Flatest)
