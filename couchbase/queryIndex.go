@@ -69,7 +69,13 @@ func (cc *Configuration) readQueryIndexByID(id string) (*queryIndex, error) {
 			break
 		}
 	}
-	defer rows.Close()
+	
+	defer func() {
+		err := rows.Close()
+		if err != nil {
+			return
+		}
+	}()
 
 	if index == nil {
 		return nil, fmt.Errorf("index not found id: %s; %w", id, gocb.ErrIndexNotFound)
@@ -100,7 +106,13 @@ func (cc *Configuration) readQueryIndexByName(indexName, bucketName string) (*qu
 			break
 		}
 	}
-	defer rows.Close()
+
+	defer func() {
+		err := rows.Close()
+		if err != nil {
+			return
+		}
+	}()
 
 	if index == nil {
 		return nil, fmt.Errorf("index not found index: %s bucket: %s; %w", indexName, bucketName, gocb.ErrIndexNotFound)
@@ -116,7 +128,13 @@ func (cc *Configuration) createPrimaryQueryIndex(indexName, bucketName string, d
 	if err != nil {
 		return err
 	}
-	defer rows.Close()
+
+	defer func() {
+		err := rows.Close()
+		if err != nil {
+			return
+		}
+	}()
 
 	return nil
 }
@@ -138,7 +156,13 @@ func (cc *Configuration) createQueryIndex(indexName, bucketName string, fields [
 	if err != nil {
 		return err
 	}
-	defer rows.Close()
+	
+	defer func() {
+		err := rows.Close()
+		if err != nil {
+			return
+		}
+	}()
 
 	return nil
 }

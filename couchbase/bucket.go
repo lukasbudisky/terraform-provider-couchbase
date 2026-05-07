@@ -10,7 +10,7 @@ import (
 	"github.com/couchbase/gocb/v2"
 )
 
-// getBucketConflictResolutionType custom fuction for get bucket conflict resolution type because couchbase golang sdk doesn't support to get conflict
+// getBucketConflictResolutionType custom function for get bucket conflict resolution type because couchbase golang sdk doesn't support to get conflict
 // resolution type in gocb v2 version. Currently gocb v2 doesn't support some operations so we must use http/https
 // and client-to-node ports for connection. You can read more about ports here:
 // https://docs.couchbase.com/server/current/install/install-ports.html
@@ -47,7 +47,13 @@ func (cc *Connection) getBucketConflictResolutionType(bucketName string) (*gocb.
 	if err != nil {
 		return nil, err
 	}
-	defer res.Body.Close()
+
+	defer func() {
+		err := res.Body.Close()
+		if err != nil {
+			return
+		}
+	}()
 
 	resData, err := io.ReadAll(res.Body)
 	if err != nil {

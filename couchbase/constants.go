@@ -15,7 +15,7 @@ const (
 	providerAllowSaslMechanism    = "allow_sasl_mechanism"
 	providerTLSRootCert           = "tls_root_cert"
 
-	// Bucket resource contants
+	// Bucket resource constants, contents
 	keyBucketName                   = "name"
 	keyBucketFlushEnabled           = "flush_enabled"
 	keyBucketQuota                  = "ram_quota_mb"
@@ -29,7 +29,7 @@ const (
 	keyBucketDurabilityLevel        = "durability_level"
 	keyBucketStorageBackend         = "storage_backend"
 
-	// Security group resource contants
+	// Security group resource constants, contents
 	keySecurityGroupName           = "name"
 	keySecurityGroupDescription    = "description"
 	keySecurityGroupRole           = "role"
@@ -39,19 +39,19 @@ const (
 	keySecurityGroupRoleCollection = "collection"
 	keySecurityGroupLdapReference  = "ldap_reference"
 
-	// Security user resource contants
+	// Security user resource constants, contents
 	keySecurityUserUsername    = "username"
 	keySecurityUserDisplayName = "display_name"
 	keySecurityUserPassword    = "password"
 	keySecurityUserRole        = "role"
 	keySecurityUserGroup       = "groups"
 
-	// Primary query index resource contants
+	// Primary query index resource constants, contents
 	keyPrimaryQueryIndexName       = "name"
 	keyPrimaryQueryIndexBucket     = "bucket"
 	keyPrimaryQueryIndexNumReplica = "num_replica"
 
-	// Query index resource contants
+	// Query index resource constants, contents
 	keyQueryIndexName       = "name"
 	keyQueryIndexBucket     = "bucket"
 	keyQueryIndexNumReplica = "num_replica"
