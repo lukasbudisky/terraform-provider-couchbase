@@ -6,7 +6,7 @@ terraform {
   required_version = ">= 1.10.5"
   required_providers {
     couchbase = {
-      version = "~> 1.1.3"
+      version = "~> 1.1.4"
       source  = "budisky.com/couchbase/couchbase"
     }
 
