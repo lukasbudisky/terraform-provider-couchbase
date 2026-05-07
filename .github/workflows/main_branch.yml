@@ -11,5 +11,13 @@ permissions: {}
 jobs:
   linters:
     uses: ./.github/workflows/linters.yml
+    permissions:
+      actions: write
+      pull-requests: write
+      statuses: write
   tests:
     uses: ./.github/workflows/tests.yml
+    permissions:
+      actions: write
+      pull-requests: write
+      statuses: write
