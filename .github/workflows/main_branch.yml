@@ -6,10 +6,7 @@ on:
     branches:
       - main
 
-permissions:
-  actions: write
-  pull-requests: write
-  statuses: write
+permissions: {}
 
 jobs:
   linters:

@@ -28,3 +28,6 @@ terraform-provider-*
 
 # Mac OS files
 .DS_Store
+
+# Others
+.claude

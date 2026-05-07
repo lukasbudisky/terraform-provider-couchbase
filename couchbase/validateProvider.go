@@ -74,7 +74,13 @@ func validateTLSRootCert() schema.SchemaValidateDiagFunc {
 			if err != nil {
 				return diag.FromErr(err)
 			}
-			defer file.Close()
+
+			defer func() {
+				err := file.Close()
+				if err != nil {
+					return
+				}
+			}()
 
 			data, err := io.ReadAll(file)
 			if err != nil {

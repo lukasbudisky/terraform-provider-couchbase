@@ -53,7 +53,7 @@ The following arguments are supported
   <ul>
     <li><b>TLS_ROOT_CERT_SKIP_VERIFY</b>Environment variable</li>
   </ul>
-  <li><b>allow_sasl_mechanism</b> (String) Allow sasl mechanism - multiple values shoud be separated with commas in one string ","</li>
+  <li><b>allow_sasl_mechanism</b> (String) Allow sasl mechanism - multiple values should be separated with commas in one string ","</li>
   <ul>
     <li><b>TLS_ROOT_CERT_ALLOW_SASL_MECHANISM</b>Environment variable</li>
   </ul>

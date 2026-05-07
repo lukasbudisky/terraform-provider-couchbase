@@ -102,7 +102,7 @@ func Provider() *schema.Provider {
 	}
 }
 
-// getSaslMechanism function parse values from string (separeted with commas) and return
+// getSaslMechanism function parse values from string (separated with commas) and return
 // list of gocb allow sasl mechanism
 func getSaslMechanism(rawSaslMechanism string) ([]gocb.SaslMechanism, diag.Diagnostics) {
 	var (
@@ -136,7 +136,13 @@ func certificateManagement(filePath string) (*x509.CertPool, diag.Diagnostics) {
 	if err != nil {
 		return nil, diag.FromErr(err)
 	}
-	defer file.Close()
+
+	defer func() {
+		err := file.Close()
+		if err != nil {
+			return
+		}
+	}()
 
 	data, err := io.ReadAll(file)
 	if err != nil {

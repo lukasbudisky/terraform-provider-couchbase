@@ -20,13 +20,14 @@ jobs:
       CB_USERNAME: Administrator
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 0
+          persist-credentials: false
       - name: Setup go
-        uses: actions/setup-go@v6.4.0
+        uses: actions/setup-go@4a3601121dd01d1626a1e23e37211e3254c1c06c # v6.4.0
         with:
-          go-version: "1.24.0"
+          go-version: "1.26.2"
       - name: Couchbase Initialization
         run: |
           make cbinit
@@ -39,7 +40,7 @@ jobs:
           make testacc
     services:
       couchbase:
-        image: couchbase
+        image: couchbase@sha256:5e505d8b98ebb827c4223d109ab93a71cbe1f2d947906b56a6e8f95c6d07a0f6
         ports:
           - 8091-8094:8091-8094
           - 11210:11210
