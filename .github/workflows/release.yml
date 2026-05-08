@@ -11,14 +11,27 @@ permissions: {}
 jobs:
   linters:
     uses: ./.github/workflows/linters.yml
+    permissions:
+      contents: write
+      actions: write
+      pull-requests: write
+      statuses: write
   tests:
     uses: ./.github/workflows/tests.yml
+    permissions:
+      contents: write
+      actions: write
+      pull-requests: write
+      statuses: write
   goreleaser:
     runs-on: ubuntu-latest
     environment: release
     needs: [linters, tests]
     permissions:
       contents: write
+      actions: write
+      pull-requests: write
+      statuses: write
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
