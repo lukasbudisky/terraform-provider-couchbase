@@ -76,5 +76,5 @@ Each resource file implements the standard `schema.Resource` with `Create`, `Rea
 ## Important Notes
 
 - **Query index parallelism**: When applying query index resources, use `terraform apply -parallelism=1`. Couchbase rejects concurrent index creation requests on the same bucket.
-- **Go version**: 1.26.2 (see `go.mod`)
+- **Go version**: 1.26.4 (see `go.mod`)
 - **Provider namespace**: `budisky.com/couchbase/couchbase` (local dev install path)
