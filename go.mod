@@ -3,7 +3,7 @@ module github.com/lukasbudisky/terraform-provider-couchbase
 go 1.26.2
 
 require (
-	github.com/couchbase/gocb/v2 v2.12.3
+	github.com/couchbase/gocb/v2 v2.12.4
 	github.com/hashicorp/go-cty v1.5.0
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.40.1
 )
