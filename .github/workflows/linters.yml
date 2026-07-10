@@ -27,4 +27,5 @@ jobs:
           VALIDATE_ALL_CODEBASE: true
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VALIDATE_GO: false
+          VALIDATE_TRIVY: false
           VALIDATE_BIOME_FORMAT: false

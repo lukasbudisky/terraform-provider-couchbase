@@ -1,3 +1,7 @@
+/*
+Package couchbase provides manage functionality for couchbase cluster resources
+*/
+
 package couchbase
 
 import (
@@ -70,7 +74,8 @@ func Provider() *schema.Provider {
 				Required:    false,
 				Optional:    true,
 				DefaultFunc: schema.EnvDefaultFunc("TLS_ROOT_CERT_ALLOW_SASL_MECHANISM", "PLAIN,SCRAM-SHA1,SCRAM-SHA256,SCRAM-SHA512"),
-				Description: fmt.Sprintf("Allowed Sasl Mechanism (separate values with commas \",\")\nAllowed values:\n%s\n%s\n%s\n%s\n",
+				Description: fmt.Sprintf(
+					"Allowed Sasl Mechanism (separate values with commas \",\")\nAllowed values:\n%s\n%s\n%s\n%s\n",
 					gocb.PlainSaslMechanism,
 					gocb.ScramSha1SaslMechanism,
 					gocb.ScramSha256SaslMechanism,
@@ -132,7 +137,7 @@ func getSaslMechanism(rawSaslMechanism string) ([]gocb.SaslMechanism, diag.Diagn
 func certificateManagement(filePath string) (*x509.CertPool, diag.Diagnostics) {
 	tlsRootCAs := *x509.NewCertPool()
 
-	file, err := os.OpenFile(filePath, os.O_RDONLY, 0600)
+	file, err := os.OpenFile(filePath, os.O_RDONLY, 0o600)
 	if err != nil {
 		return nil, diag.FromErr(err)
 	}
