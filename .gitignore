@@ -31,3 +31,4 @@ terraform-provider-*
 
 # Others
 .claude
+.crush
