@@ -1,0 +1,17 @@
+---
+# super-linter: ignore KUBERNETES_KUBECONFORM
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: terraform-provider-couchbase
+  description: Terraform provider for Couchbase allow manage resources in couchbase cluster
+  annotations:
+    github.com/project-slug: lukasbudisky/terraform-provider-couchbase
+  tags:
+    - terraform
+    - couchbase
+spec:
+  type: library
+  owner: lukas.budisky@gmail.com
+  lifecycle: production
+
