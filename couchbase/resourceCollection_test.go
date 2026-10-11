@@ -56,8 +56,8 @@ resource "couchbase_bucket_collection" "collection" {
 
 func TestAccCollection(t *testing.T) {
 	resource.Test(t, resource.TestCase{
-		PreCheck:  func() { testAccPreCheck(t) },
-		Providers: testAccProviders,
+		PreCheck:          func() { testAccPreCheck(t) },
+		ProviderFactories: testProviders(),
 		Steps: []resource.TestStep{
 			{
 				Config: testAccCollectionBasic,
@@ -73,8 +73,8 @@ func TestAccCollection(t *testing.T) {
 
 func TestAccCollectionBucketMagmaStorage(t *testing.T) {
 	resource.Test(t, resource.TestCase{
-		PreCheck:  func() { testAccPreCheck(t) },
-		Providers: testAccProviders,
+		PreCheck:          func() { testAccPreCheck(t) },
+		ProviderFactories: testProviders(),
 		Steps: []resource.TestStep{
 			{
 				Config: testAccCollectionBucketMagmaStorage,

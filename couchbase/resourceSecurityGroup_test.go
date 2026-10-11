@@ -32,8 +32,8 @@ resource "couchbase_security_group" "group" {
 // - group extended configuration
 func TestAccGroup(t *testing.T) {
 	resource.Test(t, resource.TestCase{
-		PreCheck:  func() { testAccPreCheck(t) },
-		Providers: testAccProviders,
+		PreCheck:          func() { testAccPreCheck(t) },
+		ProviderFactories: testProviders(),
 		Steps: []resource.TestStep{
 			{
 				Config: testAccGroupConfigBasic,
