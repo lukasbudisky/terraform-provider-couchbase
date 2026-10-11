@@ -20,6 +20,12 @@ func init() {
 	}
 }
 
+func testProviders() map[string]func() (*schema.Provider, error) {
+	return map[string]func() (*schema.Provider, error){
+		"terraform-provider-couchbase": func() (*schema.Provider, error) { return Provider(), nil },
+	}
+}
+
 func TestProvider(t *testing.T) {
 	if err := Provider().InternalValidate(); err != nil {
 		t.Fatalf("err: %s", err)

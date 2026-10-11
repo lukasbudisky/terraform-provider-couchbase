@@ -32,8 +32,8 @@ resource "couchbase_query_index" "query_index" {
 // - query index extended configuration
 func TestAccQueryIndex(t *testing.T) {
 	resource.Test(t, resource.TestCase{
-		PreCheck:  func() { testAccPreCheck(t) },
-		Providers: testAccProviders,
+		PreCheck:          func() { testAccPreCheck(t) },
+		ProviderFactories: testProviders(),
 		Steps: []resource.TestStep{
 			{
 				Config: testAccQueryIndexExtended,

@@ -31,8 +31,8 @@ resource "couchbase_security_user" "testAccUserConfig_basic" {
 // - user extended configuration
 func TestAccUser(t *testing.T) {
 	resource.Test(t, resource.TestCase{
-		PreCheck:  func() { testAccPreCheck(t) },
-		Providers: testAccProviders,
+		PreCheck:          func() { testAccPreCheck(t) },
+		ProviderFactories: testProviders(),
 		Steps: []resource.TestStep{
 			{
 				Config: testAccUserConfigBasic,

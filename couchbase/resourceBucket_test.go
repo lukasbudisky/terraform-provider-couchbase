@@ -35,8 +35,8 @@ resource "couchbase_bucket_manager" "bucket" {
 // - extended bucket configuration
 func TestAccBucket(t *testing.T) {
 	resource.Test(t, resource.TestCase{
-		PreCheck:  func() { testAccPreCheck(t) },
-		Providers: testAccProviders,
+		PreCheck:          func() { testAccPreCheck(t) },
+		ProviderFactories: testProviders(),
 		Steps: []resource.TestStep{
 			{
 				Config: testAccBucketBasic,

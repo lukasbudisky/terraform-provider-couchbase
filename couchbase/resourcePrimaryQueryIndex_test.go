@@ -27,8 +27,8 @@ resource "couchbase_primary_query_index" "primary_index" {
 // - basic primary index query configuration
 func TestAccPrimaryQueryIndex(t *testing.T) {
 	resource.Test(t, resource.TestCase{
-		PreCheck:  func() { testAccPreCheck(t) },
-		Providers: testAccProviders,
+		PreCheck:          func() { testAccPreCheck(t) },
+		ProviderFactories: testProviders(),
 		Steps: []resource.TestStep{
 			{
 				Config: testAccPrimaryQueryIndexBasic,
